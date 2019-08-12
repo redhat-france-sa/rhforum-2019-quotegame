@@ -150,4 +150,8 @@ $ mvn compile quarkus:dev
 2019-08-12 11:52:09,624 INFO  [org.apa.kaf.cli.con.int.ConsumerCoordinator] (vert.x-kafka-consumer-thread-1) [Consumer clientId=consumer-2, groupId=orders-4-quoteprice] Setting newly assigned partitions: quotegame-orders-0
 ```
 
+You can now start playing around with the application!
+
+![](./assets/insomnia.png)
+
 ## How to run it for a demo?
