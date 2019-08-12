@@ -1,0 +1,207 @@
+_type: export
+__export_format: 4
+__export_date: 2019-08-12T10:08:31.933Z
+__export_source: insomnia.desktop.app:v6.6.2
+resources:
+  - _id: req_700cc04ab6e94364b3bd185aaf5bac02
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: '{"username": "Laurent", "quote": "RHT", "number": 5, "price": 4.0,
+        "orderType": "SELL"}'
+    created: 1565604170348
+    description: ""
+    headers:
+      - id: pair_4cefb7c5feb240f1b45cd1b6db266b35
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1565604170348
+    method: POST
+    modified: 1565604231700
+    name: SELL 5 RHT for Laurent
+    parameters: []
+    parentId: fld_fe1508c80797480ba54acd7c887c1016
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8080/api/order
+    _type: request
+  - _id: fld_fe1508c80797480ba54acd7c887c1016
+    created: 1565604140212
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1565604140212
+    modified: 1565604140212
+    name: orders
+    parentId: fld_06a7a6c5a9f9467a952c54f86e2d18f7
+    _type: request_group
+  - _id: fld_06a7a6c5a9f9467a952c54f86e2d18f7
+    created: 1565604092658
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1565360792045
+    modified: 1565604110245
+    name: quotegame-api
+    parentId: wrk_be10c4bca92a4f7297905def667aa79e
+    _type: request_group
+  - _id: wrk_be10c4bca92a4f7297905def667aa79e
+    created: 1565604066588
+    description: ""
+    modified: 1565604066588
+    name: rhforum2019-quotegame
+    parentId: null
+    _type: workspace
+  - _id: req_934b6513dff249e184335713bfa0b4c1
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: '{"username": "Laurent", "quote": "RHT", "number": 5, "price": 4.0,
+        "orderType": "BUY"}'
+    created: 1565604207241
+    description: ""
+    headers:
+      - id: pair_4cefb7c5feb240f1b45cd1b6db266b35
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1565482481221.5
+    method: POST
+    modified: 1565604235244
+    name: BUY 5 RHT for Laurent
+    parameters: []
+    parentId: fld_fe1508c80797480ba54acd7c887c1016
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8080/api/order
+    _type: request
+  - _id: req_3ac337e0d2094477abd43192ea9706a2
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: '{"name": "Laurent", "email": "laurent.broudoux@gmail.com"}'
+    created: 1565604092664
+    description: ""
+    headers:
+      - id: pair_d6a62ee91c4045c6a87116625531ced0
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1565360792095
+    method: POST
+    modified: 1565604092664
+    name: Create user Laurent
+    parameters: []
+    parentId: fld_06a7a6c5a9f9467a952c54f86e2d18f7
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8080/api/user
+    _type: request
+  - _id: req_f98b2ae2854847e1919849f0800eee60
+    authentication: {}
+    body: {}
+    created: 1565604339320
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1565360792070
+    method: GET
+    modified: 1565604348251
+    name: Get all users
+    parameters: []
+    parentId: fld_06a7a6c5a9f9467a952c54f86e2d18f7
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8080/api/user
+    _type: request
+  - _id: req_ddc8b8c85d024023af23ce5149dda3ad
+    authentication: {}
+    body: {}
+    created: 1565604092661
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1565360792045
+    method: GET
+    modified: 1565604092661
+    name: Check Laurent' portfolio
+    parameters: []
+    parentId: fld_06a7a6c5a9f9467a952c54f86e2d18f7
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8080/api/portfolio/Laurent
+    _type: request
+  - _id: req_ec934962b21847f1bcd1e9266706820c
+    authentication: {}
+    body: {}
+    created: 1565604427187
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1565360792020
+    method: GET
+    modified: 1565604441656
+    name: Get all portfolios
+    parameters: []
+    parentId: fld_06a7a6c5a9f9467a952c54f86e2d18f7
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8080/api/portfolio
+    _type: request
+  - _id: req_12b24a87553548fbad7354791b07cf0e
+    authentication: {}
+    body: {}
+    created: 1565604372591
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1565360791995
+    method: DELETE
+    modified: 1565604396132
+    name: Delete user Laurent
+    parameters: []
+    parentId: fld_06a7a6c5a9f9467a952c54f86e2d18f7
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8080/api/user/Laurent
+    _type: request
+  - _id: env_6a7ddfaf6e34ccee786dfcaa394c6b72f9653e42
+    color: null
+    created: 1565604066607
+    data: {}
+    dataPropertyOrder: null
+    isPrivate: false
+    metaSortKey: 1565604066607
+    modified: 1565604066607
+    name: Base Environment
+    parentId: wrk_be10c4bca92a4f7297905def667aa79e
+    _type: environment
+  - _id: jar_6a7ddfaf6e34ccee786dfcaa394c6b72f9653e42
+    cookies: []
+    created: 1565604066617
+    modified: 1565604066617
+    name: Default Jar
+    parentId: wrk_be10c4bca92a4f7297905def667aa79e
+    _type: cookie_jar
