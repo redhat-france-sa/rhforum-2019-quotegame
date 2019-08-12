@@ -5,10 +5,28 @@ A stock quote game illustrating Red Hat middleware portfolio around Kafka, Quark
 
 ## What is it?
 
+## Architecture
+
+Here's the architecture components diagram of this repository.
+
+This stock quote game is using Infini span and Kafla as data sources backend. Infinispan distributed data grid is used for storing mutable and highly volatile informations like the users informations, the users portfolio and the current prices of all the managed quote symbols. Kafka on the other hand is used to as an append-only logs to store immutable events like user's orders and quotes prices history. 
+
+![](./assets/architecture.png)
+
+Application main business components are here represented in green:
+* The `quotegame-ui` is obviously the one holding the User Interface that is mobile friendly,
+* The `quotegame-api` microservice holds the REST APIs for interacting with the application. It allows basically to register user, post orders and check portfolio symbols and values. It mainly read informations from Infinispan caches and publish new order events into Kafka,
+* The `quotegame-processors` microservice holds the update logic for both portfolio and stock pricess. It reacts on incoming events consumed into Kafka and update portfolio and quote values in Infinispan.
+
+Application also had extra components here represented in purple. They help demonstrating application under huge load and unexpected events:
+* The `quotegame-userbot` can be used to simulate hundreds or thousands of users playing with the game,
+* The `quotegame-chaosmonkey` can be used to simulate unstability and uncertainty on the market trends. It can be used to simulate crisis ;-)
+
+
 ## How to build/contribute?
 
 Requirements:
-+ Java 1.8.0+
+* Java 1.8.0+
 * Maven 3.6.0+
 * Docker for desktop 18.09+
  
