@@ -19,7 +19,7 @@
     <repository>
       <releases />
       <snapshots>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
       </snapshots>
       <id>jboss.public</id>
       <url>http://repository.jboss.org/nexus/content/repositories/public/</url>
@@ -29,7 +29,7 @@
     <pluginRepository>
       <releases />
       <snapshots>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
       </snapshots>
       <id>jboss.public</id>
       <url>http://repository.jboss.org/nexus/content/repositories/public/</url>
