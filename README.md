@@ -150,7 +150,7 @@ $ mvn compile quarkus:dev
 2019-08-12 11:52:09,624 INFO  [org.apa.kaf.cli.con.int.ConsumerCoordinator] (vert.x-kafka-consumer-thread-1) [Consumer clientId=consumer-2, groupId=orders-4-quoteprice] Setting newly assigned partitions: quotegame-orders-0
 ```
 
-You can now start playing around with the application!
+You can now start playing around with the application! For ease of use an [Insomnia](https://insomnia.rest/) workspace is available [here](./insomnia-workspace.yaml). Just import it into Insomnia and you'll get some tests queries ready to use:
 
 ![](./assets/insomnia.png)
 
