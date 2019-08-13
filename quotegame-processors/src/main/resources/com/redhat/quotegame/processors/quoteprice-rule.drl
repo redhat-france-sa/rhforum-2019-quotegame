@@ -1,0 +1,11 @@
+package com.redhat.quotegame.processors
+unit AggregationService
+
+import com.redhat.quotegame.model.Order
+
+rule "com.redhat.quotegame.processors.AggregationService.IncomingOrder"
+when
+    $o : /orderStream
+then
+    aggregateStream.append($o);
+end
