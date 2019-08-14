@@ -33,7 +33,7 @@ Requirements:
 ### Build the maven modules
 
 ```sh
-$ mvn clean install
+$ mvn clean install -DskipTests
 [INFO] Scanning for projects...
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Build Order:
