@@ -18,6 +18,7 @@ import io.quarkus.infinispan.client.runtime.Remote;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.jboss.logging.Logger;
 
+import com.redhat.quotegame.QuoteGameApp;
 import com.redhat.quotegame.model.Portfolio;
 import com.redhat.quotegame.model.User;
 
@@ -40,8 +41,12 @@ public class UserResource {
     @Remote("quotegame-portfolios")
     RemoteCache<String, Portfolio> portfoliosCache;
 
+    @Inject
+    QuoteGameApp application;
+
     @POST
     public Response register(User user) {
+        application.ensureStart();
         logger.debug("Try creating user using cache " + cache);
         User existingUser = cache.get(user.getName());
         if (existingUser == null) {
@@ -54,6 +59,7 @@ public class UserResource {
 
     @GET
     public List<User> getAllUsers() {
+        application.ensureStart();
 		return cache.values().stream()
             .collect(Collectors.toList());
     }

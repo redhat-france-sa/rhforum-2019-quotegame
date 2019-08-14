@@ -3,7 +3,7 @@ package com.redhat.quotegame.api;
 import io.quarkus.test.junit.SubstrateTest;
 
 @SubstrateTest
-public class NativeGreetingResourceIT extends GreetingResourceTest {
+public class NativeUserResourceIT extends UserResourceTest {
 
     // Execute the same tests but in native mode.
 }
