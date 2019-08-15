@@ -15,3 +15,8 @@ message Portfolio {
   required double money = 2;
   repeated QuotesMapEntry quotes = 3; 
 }
+
+message Quote {
+  required string symbol = 1;
+  required double price = 2;
+}

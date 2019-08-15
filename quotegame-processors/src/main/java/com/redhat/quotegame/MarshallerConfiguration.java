@@ -3,6 +3,7 @@ package com.redhat.quotegame;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
+import com.redhat.quotegame.util.QuoteMarshaller;
 import org.infinispan.protostream.MessageMarshaller;
 
 import com.redhat.quotegame.util.PortfolioMarshaller;
@@ -30,4 +31,7 @@ public class MarshallerConfiguration {
     MessageMarshaller quotesMapEntryMarshaller() {
         return new QuotesMapEntryMarshaller();
     }
+
+    @Produces
+    MessageMarshaller quoteMarshaller() { return new QuoteMarshaller(); }
 }
