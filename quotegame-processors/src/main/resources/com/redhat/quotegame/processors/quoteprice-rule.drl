@@ -1,38 +1,20 @@
 package com.redhat.quotegame.processors
-//unit AggregationService
+unit QuotePriceUpdaterService
 
 import com.redhat.quotegame.model.Order
 import com.redhat.quotegame.model.OrderType
-import com.redhat.quotegame.model.Quote
 import java.util.List
 
-//rule "com.redhat.quotegame.processors.AggregationService.IncomingOrder"
-//when
-//    $o : /orderStream
-//then
-//    aggregateStream.append($o);
-//end
+rule "com.redhat.quotegame.processors.QuotePriceUpdaterService.IncomingOrder"
+when
+    $list : List( size == 3 ) from collect /orderStream[ orderType == OrderType.BUY ]
+then
+    System.out.println(drools.getRule().getName());
+    for ( Object $o : $list){
+        System.out.println("Retracting "+$o);
+    }
+end
 
-// ### This's code generate following compilation errors with Kogito ###
-//[ERROR] /Users/snoussi/Projects/demo/RHForum19FR/rhforum-2019-quotegame/quotegame-processors/target/generated-sources/kogito/com/redhat/quotegame/processors/RulesFDF3DF171AA07357C5FA6AC5D133F4BERuleMethods0.java:[61,98] method accumulate in class org.drools.model.DSL cannot be applied to given types;
-//[ERROR]   required: org.drools.model.view.ViewItem<?>,org.drools.model.functions.accumulate.AccumulateFunction,org.drools.model.functions.accumulate.AccumulateFunction[]
-//[ERROR]   found: org.drools.model.functions.accumulate.AccumulateFunction
-//[ERROR]   reason: cannot infer type-variable(s) T
-//[ERROR]     (argument mismatch; org.drools.model.functions.accumulate.AccumulateFunction cannot be converted to org.drools.model.view.ViewItem<?>)
 
-//declare Order
-//  @role(event)
-//  @timestamp (timestamp)
-//  @expires( 2m )
-//end
-//declare window LastThreeOrders
-//    Order() over window:length(3)
-//    from entry-point "Order Stream"
-//end
-//
-//rule "3 successives BUY Orders of the same Quote"
-//when
-//    $list : List( size == 3 ) from collect ( Order( orderType.equals(OrderType.BUY)) from window LastThreeOrders )
-//then
-//    System.out.println(drools.getRule().getName());
-//end
+
+

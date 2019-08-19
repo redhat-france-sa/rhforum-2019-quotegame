@@ -42,4 +42,11 @@ public class Quote {
         return Objects.hash(symbol, price);
     }
 
+    @Override
+    public String toString() {
+        return "Quote{" +
+                "symbol='" + symbol + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

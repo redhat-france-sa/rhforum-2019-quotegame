@@ -7,9 +7,9 @@
 <!--</kmodule>-->
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
   <kbase name="myKB1" equalsBehavior="identity" eventProcessingMode="stream" packages="com.redhat.quotegame.processors">
-    <ksession name="myStatefulKsession" default="true" type="stateful" clockType="realtime"/>
+    <ksession name="myStatefulKieSession" default="true" type="stateful" clockType="realtime"/>
   </kbase>
-  <kbase name="myKB2" packages="com.redhat.quotegame.processors">
-    <ksession name="myStatelessKsession"  />
+  <kbase name="myKB2" equalsBehavior="equality" packages="com.redhat.quotegame.processors">
+    <ksession name="myKieSession" type="stateful" />
   </kbase>
 </kmodule>
