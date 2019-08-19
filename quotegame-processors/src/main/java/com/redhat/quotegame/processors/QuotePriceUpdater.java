@@ -2,6 +2,8 @@ package com.redhat.quotegame.processors;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+
 import com.redhat.quotegame.model.Order;
 import com.redhat.quotegame.model.Quote;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
@@ -9,7 +11,9 @@ import org.infinispan.client.hotrod.RemoteCache;
 import org.jboss.logging.Logger;
 
 import io.quarkus.infinispan.client.runtime.Remote;
-
+import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.FactHandle;
+import org.kie.kogito.rules.KieRuntimeBuilder;
 
 @ApplicationScoped
 /**
@@ -19,11 +23,13 @@ import io.quarkus.infinispan.client.runtime.Remote;
 public class QuotePriceUpdater {
 
     private final Logger logger = Logger.getLogger(getClass());
+    private KieSession ksession;
 
-    QuotePriceUpdaterService quotePriceUpdaterService = new QuotePriceUpdaterService();
-    QuotePriceUpdaterServiceRuleUnitInstance quotePriceUpdaterServiceInstance = new QuotePriceUpdaterServiceRuleUnit().createInstance(quotePriceUpdaterService);
-
-
+    @Inject
+    @Named("myKieSession")
+    QuotePriceUpdater( KieRuntimeBuilder runtimeBuilder ) {
+        ksession = runtimeBuilder.newKieSession();
+    }
 
     @Inject
     @Remote("quotegame-quotes")
@@ -33,11 +39,30 @@ public class QuotePriceUpdater {
     public void computeQuotePrices(Order order) {
 
         logger.info("Get new order to process 1S ...");
-//        logger.info("Get corresponding Quote ...");
-//        Quote quote = quotesCache.get(order.getQuote());
+        logger.info("Get corresponding Quote ...");
 
-        quotePriceUpdaterService.getOrderStream().append(order);
-        quotePriceUpdaterServiceInstance.fire();
+        Quote quote = quotesCache.get(order.getQuote());
+        int quoteBefore = quote.hashCode();
+
+        logger.info("Inserting Order fact ...");
+        ksession.insert(order);
+
+        logger.info("Inserting Quote fact ...");
+        FactHandle quoteFH = ksession.insert(quote);
+
+        logger.info("Fire Rules ...");
+        ksession.fireAllRules();
+        int quoteAfter = quote.hashCode();
+
+        if (quoteBefore == quoteAfter){
+            logger.info("Quote not modified");
+        }else{
+            logger.info("updating Quote cache");
+            quotesCache.replace(order.getQuote(), quote);
+        }
+
+        ksession.delete(quoteFH);
+        logger.info("number of facts in WM = "+ksession.getFactCount());
     }
 
 }
