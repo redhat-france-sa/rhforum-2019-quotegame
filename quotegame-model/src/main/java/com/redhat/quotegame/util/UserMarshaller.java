@@ -31,7 +31,7 @@ public class UserMarshaller implements MessageMarshaller<User> {
     @Override
     public User readFrom(ProtoStreamReader reader) throws IOException {
         String name = reader.readString("name");
-        String score = reader.readString("email");
-        return new User(name, score);
+        String email = reader.readString("email");
+        return new User(name, email);
     }
 }

@@ -1,9 +1,13 @@
 package com.redhat.quotegame.model;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 /**
  * Model definition of an Order
+ * 
  * @author laurent
  */
+@RegisterForReflection
 public class Order {
     private String username;
     private OrderType orderType;

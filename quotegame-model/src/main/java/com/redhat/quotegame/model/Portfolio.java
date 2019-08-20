@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 /**
  * Model definition of a Portfolio
  * @author laurent
  */
+@RegisterForReflection
 public class Portfolio {
     private String username;
     private Double money = 1000D;
@@ -55,7 +58,7 @@ public class Portfolio {
         if (o == null || getClass() != o.getClass())
             return false;
         Portfolio portfolio = (Portfolio) o;
-        return username == portfolio.username;
+        return username.equals(portfolio.username);
     }
     
     @Override

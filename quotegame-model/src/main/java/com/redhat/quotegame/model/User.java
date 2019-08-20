@@ -2,10 +2,13 @@ package com.redhat.quotegame.model;
 
 import java.util.Objects;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 /**
  * Model definition of a User.
  * @author laurent
  */
+@RegisterForReflection
 public class User {
     private String name;
     private String email;
