@@ -10,5 +10,6 @@
     <module>quotegame-model</module>
     <module>quotegame-api</module>
     <module>quotegame-processors</module>
+    <module>quotegame-chaosmonkey</module>
   </modules>
 </project>

@@ -12,11 +12,11 @@ export class LocalStorageService {
     return this.storage.get(this.CREDENTIALS_STORAGE_KEY);
   }
 
-  public storeCredentials(username: string, password: string): void {
+  public storeCredentials(username: string, email: string): void {
     // Overwrite values.
     let currentCredentials = {
       username: username,
-      password: password
+      email: email
     };
 
     // Insert updated credentials to local storage.

@@ -22,14 +22,14 @@ export class AuthenticationService {
     return null;
   }
 
-  public login(username: string, password: string): Observable<any> {
-    return this.http.post<any>("/api/admin", {username: username, password: password}); 
+  public login(username: string, email: string): Observable<any> {
+    return this.http.post<any>("/api/user", {username: username, email: email}); 
   }
 
-  public notifyLoginSuccessfull(username: string, password: string): void {
-    this.storageService.storeCredentials(username, password);
+  public notifyLoginSuccessfull(username: string, email: string): void {
+    this.storageService.storeCredentials(username, email);
     this.credentials = this.storageService.readCredentials();
-    this.encodedCredentials = btoa(this.credentials.username + ':' + this.credentials.password);
+    this.encodedCredentials = btoa(this.credentials.username + ':' + this.credentials.email);
   }
   
   public logout(): void {
@@ -39,7 +39,7 @@ export class AuthenticationService {
   public injectAuthHeaders(headers: { [header: string]: string }): void {
     if (!this.credentials) {
       this.credentials = this.storageService.readCredentials();
-      this.encodedCredentials = btoa(this.credentials.username + ':' + this.credentials.password);
+      this.encodedCredentials = btoa(this.credentials.username + ':' + this.credentials.email);
     }
     let authHeader: string = "Basic " + this.encodedCredentials;
     headers["Authorization"] = authHeader;

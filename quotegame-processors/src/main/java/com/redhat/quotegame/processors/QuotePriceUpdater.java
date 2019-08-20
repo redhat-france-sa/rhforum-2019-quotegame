@@ -4,7 +4,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import com.redhat.quotegame.model.Order;
-import com.redhat.quotegame.model.OrderType;
 
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.infinispan.client.hotrod.RemoteCache;

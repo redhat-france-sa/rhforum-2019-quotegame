@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { VerticalNavigationItem } from 'patternfly-ng/navigation/vertical-navigation/vertical-navigation-item';
+import { AuthenticationService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,8 @@ export class AppComponent implements OnInit {
   navigationItems: VerticalNavigationItem[];
   actionText: string = '';
 
+  constructor(protected authService: AuthenticationService) {}
+  
   ngOnInit(): void {
     this.navigationItems = [
       {
@@ -23,11 +26,20 @@ export class AppComponent implements OnInit {
     ]
   }
 
+  public isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
+  }
+
+  public logout(): void {
+    console.log("[AppComponent] logout() called");
+    this.authService.logout();
+  }
+
   onItemClicked($event: VerticalNavigationItem): void {
-    this.actionText += 'Item Clicked: ' + $event.title + '\n';
+    console.log("[AppComponent] Item clicked: " + $event.title);
   }
 
   onNavigation($event: VerticalNavigationItem): void {
-    this.actionText += 'Navigation event fired: ' + $event.title + '\n';
+    console.log("[AppComponent] Navigation event fired: " + $event.title);
   }
 }
