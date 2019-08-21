@@ -95,13 +95,15 @@ public class QuoteResource {
             data.append("]");
 
             logger.debug("Publishing: " + data.toString());
-            OutboundSseEvent sseEvent = this.eventBuilder.name("quotes")
+            OutboundSseEvent sseEvent = this.eventBuilder.name("message")
                 .id(LocalDateTime.now().toString())
                 .mediaType(MediaType.APPLICATION_JSON_TYPE)
                 .data(data.toString())
                 .reconnectDelay(3000)
                 .build();
             sseBroadcaster.broadcast(sseEvent);
+            //sseBroadcaster.broadcast(this.eventBuilder.data(data.toString()).build());
+            //sseBroadcaster.broadcast(this.eventBuilder.name("message").data("{\"timestamp\":1566403446588,\"symbol\":\"EUR/USD\",\"bid\":\"1.59861\",\"ask\":\"1.59871\"}").build());	
         }
     }
 
