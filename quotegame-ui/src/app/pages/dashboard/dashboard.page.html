@@ -1,16 +1,10 @@
 <div id="quotes" class="clearfix">
   <div class="row">
     <div class="col-xs-8">
-      <pfng-card [config]="chartCardConfig"
+      <pfng-card [config]="rhChartCardConfig"
           (onFilterSelect)="handleChartFilterSelect($event)">
-        <pfng-sparkline-chart [config]="chartConfig" [chartData]="chartData" ></pfng-sparkline-chart>
+        <pfng-sparkline-chart [config]="rhChartConfig" [chartData]="rhChartData" ></pfng-sparkline-chart>
       </pfng-card>
-      <!--
-      <pfng-card [config]="chartCardConfig"
-          (onFilterSelect)="handleChartFilterSelect($event)">
-        <pfng-sparkline-chart [config]="chartConfig" [chartData]="chartData" ></pfng-sparkline-chart>
-      </pfng-card>
-      -->
     </div>
     <div class="col-xs-4">
 
@@ -18,9 +12,10 @@
   </div>
   <div class="row">
     <div class="col-xs-8">
-        <pfng-card [config]="chartCardConfig"
+      <pfng-card [config]="ibmChartCardConfig"
           (onFilterSelect)="handleChartFilterSelect($event)">
-        </pfng-card>
+        <pfng-sparkline-chart [config]="ibmChartConfig" [chartData]="ibmChartData" ></pfng-sparkline-chart>
+      </pfng-card>
     </div>
     <div class="col-xs-4">
 
