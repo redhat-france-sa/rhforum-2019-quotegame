@@ -30,6 +30,13 @@ export class AppComponent implements OnInit {
     return this.authService.isAuthenticated();
   }
 
+  public getAuthenticatedUser(): string {
+    if (this.isAuthenticated()) {
+      return this.authService.getAuthenticatedUser();
+    }
+    return null;
+  }
+
   public logout(): void {
     console.log("[AppComponent] logout() called");
     this.authService.logout();

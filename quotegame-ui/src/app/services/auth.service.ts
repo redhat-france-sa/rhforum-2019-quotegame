@@ -23,7 +23,7 @@ export class AuthenticationService {
   }
 
   public login(username: string, email: string): Observable<any> {
-    return this.http.post<any>("/api/user", {username: username, email: email}); 
+    return this.http.post<any>("/api/user", {name: username, email: email}); 
   }
 
   public notifyLoginSuccessfull(username: string, email: string): void {

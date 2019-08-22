@@ -1,0 +1,17 @@
+
+.big-text {
+  font-size: 3em !important;
+}
+.med-text {
+  font-size: 1.5em !important;
+}
+.bt-lg {
+  height: 30px;
+  width: 40px;
+}
+.m-2 {
+  margin: 5px !important;
+}
+.mb-4 {
+  margin-bottom: 20px !important;
+}

@@ -11,7 +11,7 @@ import { BackendService } from '../../services/backend.service';
 export class RegisterUserComponent implements OnInit {
 
   private username: string;
-  private password: string;
+  private email: string;
 
   constructor(protected authService: AuthenticationService, protected backendService: BackendService) {}
 
@@ -21,13 +21,16 @@ export class RegisterUserComponent implements OnInit {
 
   public login(): void{
     console.log("[RegisterUserComponent] login() called with " + this.username);
-    this.authService.login(this.username, this.password).subscribe(
+    this.authService.login(this.username, this.email).subscribe(
       {
         next: res => {
-          this.authService.notifyLoginSuccessfull(this.username, this.password);
+          this.authService.notifyLoginSuccessfull(this.username, this.email);
         },
         error: err => {
           console.log("Obsever got error: " + JSON.stringify(err));
+          if (err.status == 400) {
+            this.authService.notifyLoginSuccessfull(this.username, this.email);
+          }
         },
         complete: () => console.log('Observer got a complete notification'),
       });

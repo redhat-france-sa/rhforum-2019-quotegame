@@ -7,10 +7,27 @@ export class BackendService {
 
   private rootUrl: string = '/api';
 
-  constructor(private zone: NgZone) {}
+  constructor(private http: HttpClient, private zone: NgZone) {}
+
+  public getUserPortfolio(username: string): Observable<any> {
+    return this.http.get<any>(this.rootUrl + '/portfolio/' + username);
+  }
+
+  public placeOrder(username: string, buy: boolean, symbol: string, numOfQuotes: number, price: number): Observable<any> {
+    var order = {
+      username: username,
+      quote: symbol,
+      number: numOfQuotes,
+      price: price,
+      orderType: "SELL"
+    }
+    if (buy) {
+      order.orderType = "BUY"
+    }
+    return this.http.post<any>(this.rootUrl + '/order', order);
+  }
 
   public getQuoteStreaming(): Observable<any> {
-    console.log("Creating observer");
     return Observable.create(observer => {
       const eventSource = new EventSource(this.rootUrl + "/quote/streaming");
 

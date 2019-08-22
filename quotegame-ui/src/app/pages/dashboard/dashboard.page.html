@@ -1,24 +1,75 @@
-<div id="quotes" class="clearfix">
+<div id="quotes" *ngIf="isAuthenticated()">
   <div class="row">
-    <div class="col-xs-8">
-      <pfng-card [config]="rhChartCardConfig"
-          (onFilterSelect)="handleChartFilterSelect($event)">
-        <pfng-sparkline-chart [config]="rhChartConfig" [chartData]="rhChartData" ></pfng-sparkline-chart>
-      </pfng-card>
+    <div class="col-xs-8 mb-4">
+      <h2>Buy and sell RHT and IBM quotes to win a prize!</h2>
     </div>
-    <div class="col-xs-4">
-
+    <div class="col-xs-4 text-right mb-4">
+      <br/>
+      <span class="big-text"><b>{{ money | number:'1.2-2' }}</b></span> <span class="med-text">&nbsp; $</span>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-8">
-      <pfng-card [config]="ibmChartCardConfig"
-          (onFilterSelect)="handleChartFilterSelect($event)">
+      <pfng-card [config]="rhChartCardConfig">
+        <pfng-sparkline-chart [config]="rhChartConfig" [chartData]="rhChartData" ></pfng-sparkline-chart>
+      </pfng-card>
+    </div>
+    <div class="col-xs-4">
+      <pfng-card [config]="rhQuoteCardConfig" [headerTemplate]="rhQuotesTemplate">
+        <ng-template #rhQuotesTemplate>
+          <h2 class="card-pf-title">RHT Portfolio
+            <span class="badge font-weight-bolder" style="font-size: 1.2em">{{ portfolioQuotes('RHT') }}</span>
+          </h2>
+        </ng-template>
+        <div class="row">
+          <div class="col-xs-12">
+            Buy:
+            <button type="button" class="btn btn-primary bt-lg m-2" (click)="buy('RHT', 1)" [disabled]="!canBuy('RHT', 1)">1</button>
+            <button type="button" class="btn btn-primary bt-lg m-2" (click)="buy('RHT', 5)" [disabled]="!canBuy('RHT', 5)">5</button>
+            <button type="button" class="btn btn-primary bt-lg m-2" (click)="buy('RHT', 10)" [disabled]="!canBuy('RHT', 10)">10</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            Sell:
+            <button type="button" class="btn btn-warning bt-lg m-2" (click)="sell('RHT', 1)" [disabled]="!canSell('RHT', 1)">1</button>
+            <button type="button" class="btn btn-warning bt-lg m-2" (click)="sell('RHT', 5)" [disabled]="!canSell('RHT', 5)">5</button>
+            <button type="button" class="btn btn-warning bt-lg m-2" (click)="sell('RHT', 10)" [disabled]="!canSell('RHT', 10)">10</button>
+          </div>
+        </div>
+      </pfng-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-8">
+      <pfng-card [config]="ibmChartCardConfig">
         <pfng-sparkline-chart [config]="ibmChartConfig" [chartData]="ibmChartData" ></pfng-sparkline-chart>
       </pfng-card>
     </div>
     <div class="col-xs-4">
-
+      <pfng-card [config]="ibmQuoteCardConfig" [headerTemplate]="ibmQuotesTemplate">
+        <ng-template #ibmQuotesTemplate>
+          <h2 class="card-pf-title">IBM Portfolio
+            <span class="badge font-weight-bolder" style="font-size: 1.2em">{{ portfolioQuotes('IBM') }}</span>
+          </h2>
+        </ng-template>
+        <div class="row">
+          <div class="col-xs-12">
+            Buy:
+            <button type="button" class="btn btn-primary bt-lg m-2" (click)="buy('IBM', 1)" [disabled]="!canBuy('IBM', 1)">1</button>
+            <button type="button" class="btn btn-primary bt-lg m-2" (click)="buy('IBM', 5)" [disabled]="!canBuy('IBM', 5)">5</button>
+            <button type="button" class="btn btn-primary bt-lg m-2" (click)="buy('IBM', 10)" [disabled]="!canBuy('IBM', 10)">10</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            Sell:
+            <button type="button" class="btn btn-warning bt-lg m-2" (click)="sell('IBM', 1)" [disabled]="!canSell('IBM', 1)">1</button>
+            <button type="button" class="btn btn-warning bt-lg m-2" (click)="sell('IBM', 5)" [disabled]="!canSell('IBM', 5)">5</button>
+            <button type="button" class="btn btn-warning bt-lg m-2" (click)="sell('IBM', 10)" [disabled]="!canSell('IBM', 10)">10</button>
+          </div>
+        </div>
+      </pfng-card>
     </div>
   </div>
 </div>
