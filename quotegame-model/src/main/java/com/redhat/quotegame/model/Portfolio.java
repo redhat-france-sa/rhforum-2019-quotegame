@@ -89,4 +89,13 @@ public class Portfolio {
             this.value = value;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Portfolio{" +
+                "username='" + username + '\'' +
+                ", money=" + money +
+                ", quotes=" + quotes +
+                '}';
+    }
 }

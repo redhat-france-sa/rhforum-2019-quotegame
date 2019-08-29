@@ -1,11 +1,33 @@
 package com.redhat.quotegame.processors
-unit AggregationService
 
 import com.redhat.quotegame.model.Order
+import com.redhat.quotegame.model.OrderType
+import com.redhat.quotegame.model.Quote
+import java.util.List
 
-rule "com.redhat.quotegame.processors.AggregationService.IncomingOrder"
+rule "3 BUY Orders of same Quote"
 when
-    $o : /orderStream
+    $q : Quote()
+    $list : List( size == 3 ) from collect ( Order( orderType == OrderType.BUY , quote == $q.symbol ) )
 then
-    aggregateStream.append($o);
+    System.out.println(drools.getRule().getName());
+    $q.setPrice($q.getPrice()+0.01);
+    for ( Object $o : $list){
+        System.out.println("Retracting "+$o);
+        delete($o);
+    }
+
+end
+
+rule "3 SELL Orders of same Quote"
+when
+    $q : Quote()
+    $list : List( size == 3 ) from collect ( Order( orderType == OrderType.SELL , quote == $q.symbol ) )
+then
+    System.out.println(drools.getRule().getName());
+    $q.setPrice($q.getPrice()-0.01);
+    for ( Object $o : $list){
+        System.out.println("Retracting "+$o);
+        delete($o);
+    }
 end
