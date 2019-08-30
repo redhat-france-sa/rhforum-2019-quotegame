@@ -22,9 +22,9 @@ public class PortfolioUpdater {
  
     private final Logger logger = Logger.getLogger(getClass());
     
-    @Inject
-    @Remote("quotegame-quotes")
-    RemoteCache<String, Double> quotesCache;
+//    @Inject
+//    @Remote("quotegame-quotes")
+//    RemoteCache<String, Double> quotesCache;
 
     @Inject
     @Remote("quotegame-portfolios")
