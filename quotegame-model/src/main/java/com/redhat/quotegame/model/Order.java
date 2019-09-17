@@ -115,4 +115,16 @@ public class Order {
             return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "username='" + username + '\'' +
+                ", orderType=" + orderType +
+                ", timestamp=" + timestamp +
+                ", quote='" + quote + '\'' +
+                ", price=" + price +
+                ", number=" + number +
+                '}';
+    }
 }

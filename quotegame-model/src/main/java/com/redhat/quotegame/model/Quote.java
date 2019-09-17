@@ -59,4 +59,12 @@ public class Quote {
         result = prime * result + ((symbol == null) ? 0 : symbol.hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Quote{" +
+                "symbol='" + symbol + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

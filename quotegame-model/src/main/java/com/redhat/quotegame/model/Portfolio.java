@@ -66,6 +66,15 @@ public class Portfolio {
         return Objects.hash(username);
     }
 
+    @Override
+    public String toString() {
+        return "Portfolio{" +
+                "username='" + username + '\'' +
+                ", money=" + money +
+                ", quotes=" + quotes +
+                '}';
+    }
+
     public static class QuotesMapEntry {
         private String key;
         private Long value;
