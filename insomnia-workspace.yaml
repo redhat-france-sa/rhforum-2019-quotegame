@@ -1,14 +1,122 @@
 _type: export
 __export_format: 4
-__export_date: 2019-08-12T10:08:31.933Z
+__export_date: 2019-09-17T11:32:59.299Z
 __export_source: insomnia.desktop.app:v6.6.2
 resources:
+  - _id: req_5e97f6ea7c4942d3866902f42a24a804
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: ""
+    created: 1566305492217
+    description: ""
+    headers:
+      - id: pair_c70f8ad791994d989c9d55e6472885c8
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1566305492217
+    method: GET
+    modified: 1566305589464
+    name: Get RHT quote prices
+    parameters: []
+    parentId: fld_88cda5ce0fc140ea828e85dd99aa8f8b
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8080/api/quote/RHT
+    _type: request
+  - _id: fld_88cda5ce0fc140ea828e85dd99aa8f8b
+    created: 1566305330931
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1566305330931
+    modified: 1566305330931
+    name: quotes
+    parentId: fld_06a7a6c5a9f9467a952c54f86e2d18f7
+    _type: request_group
+  - _id: fld_06a7a6c5a9f9467a952c54f86e2d18f7
+    created: 1565604092658
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1565360792045
+    modified: 1565604110245
+    name: quotegame-api
+    parentId: wrk_be10c4bca92a4f7297905def667aa79e
+    _type: request_group
+  - _id: wrk_be10c4bca92a4f7297905def667aa79e
+    created: 1565604066588
+    description: ""
+    modified: 1565604066588
+    name: rhforum2019-quotegame
+    parentId: null
+    _type: workspace
+  - _id: req_ae09fff0b8bb45408e5bf951d2be8afc
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: "130"
+    created: 1566305446263
+    description: ""
+    headers:
+      - id: pair_2a61ed3ff39e4510ad17785224f7c007
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1566305446263
+    method: PUT
+    modified: 1566305467581
+    name: Update IBM quote price
+    parameters: []
+    parentId: fld_88cda5ce0fc140ea828e85dd99aa8f8b
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8080/api/quote/IBM
+    _type: request
+  - _id: req_f4a31bb535df4fffbb5a1d1637261599
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: "187"
+    created: 1566305323518
+    description: ""
+    headers:
+      - id: pair_39d014cfa8124cd6be7975c0b5a8fd05
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1566305323519
+    method: PUT
+    modified: 1566328476155
+    name: Update RHT quote price
+    parameters: []
+    parentId: fld_88cda5ce0fc140ea828e85dd99aa8f8b
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8080/api/quote/RHT
+    _type: request
   - _id: req_700cc04ab6e94364b3bd185aaf5bac02
     authentication: {}
     body:
       mimeType: application/json
-      text: '{"username": "Laurent", "quote": "RHT", "number": 5, "price": 4.0,
-        "orderType": "SELL"}'
+      text: |-
+        {
+        	"username": "Laurent",
+        	"quote": "RHT",
+        	"number": 5,
+        	"price": 4.0,
+        	"orderType": "SELL"
+        }
     created: 1565604170348
     description: ""
     headers:
@@ -18,7 +126,7 @@ resources:
     isPrivate: false
     metaSortKey: -1565604170348
     method: POST
-    modified: 1565604231700
+    modified: 1566463980753
     name: SELL 5 RHT for Laurent
     parameters: []
     parentId: fld_fe1508c80797480ba54acd7c887c1016
@@ -39,29 +147,18 @@ resources:
     name: orders
     parentId: fld_06a7a6c5a9f9467a952c54f86e2d18f7
     _type: request_group
-  - _id: fld_06a7a6c5a9f9467a952c54f86e2d18f7
-    created: 1565604092658
-    description: ""
-    environment: {}
-    environmentPropertyOrder: null
-    metaSortKey: -1565360792045
-    modified: 1565604110245
-    name: quotegame-api
-    parentId: wrk_be10c4bca92a4f7297905def667aa79e
-    _type: request_group
-  - _id: wrk_be10c4bca92a4f7297905def667aa79e
-    created: 1565604066588
-    description: ""
-    modified: 1565604066588
-    name: rhforum2019-quotegame
-    parentId: null
-    _type: workspace
   - _id: req_934b6513dff249e184335713bfa0b4c1
     authentication: {}
     body:
       mimeType: application/json
-      text: '{"username": "Laurent", "quote": "RHT", "number": 5, "price": 4.0,
-        "orderType": "BUY"}'
+      text: |-
+        {
+        	"username": "Laurent",
+        	"quote": "RHT",
+        	"number": 5,
+        	"price": 4.0,
+        	"orderType": "BUY"
+        }
     created: 1565604207241
     description: ""
     headers:
@@ -71,7 +168,7 @@ resources:
     isPrivate: false
     metaSortKey: -1565482481221.5
     method: POST
-    modified: 1565604235244
+    modified: 1565621878199
     name: BUY 5 RHT for Laurent
     parameters: []
     parentId: fld_fe1508c80797480ba54acd7c887c1016
