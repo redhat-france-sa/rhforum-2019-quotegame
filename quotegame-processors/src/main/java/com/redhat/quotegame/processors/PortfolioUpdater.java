@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import com.redhat.quotegame.model.Order;
 import com.redhat.quotegame.model.OrderType;
 import com.redhat.quotegame.model.Portfolio;
+import com.redhat.quotegame.model.Quote;
 
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.infinispan.client.hotrod.RemoteCache;
@@ -24,7 +25,7 @@ public class PortfolioUpdater {
     
     @Inject
     @Remote("quotegame-quotes")
-    RemoteCache<String, Double> quotesCache;
+    RemoteCache<String, Quote> quotesCache;
 
     @Inject
     @Remote("quotegame-portfolios")

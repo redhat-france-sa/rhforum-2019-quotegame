@@ -4,6 +4,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import com.redhat.quotegame.model.Quote;
+
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
 import org.slf4j.Logger;
@@ -22,11 +24,12 @@ public class QuoteGameProcessorsApp {
     void onStart(@Observes StartupEvent ev) {
         logger.info("Create or get caches named quotegame-portfolios, quotegame-quotes with the default configuration");
         cacheManager.administration().getOrCreateCache("quotegame-portfolios", "default");
-        RemoteCache<String, Double> quotesCache = cacheManager.administration().getOrCreateCache("quotegame-quotes", "default");
+        
+        RemoteCache<String, Quote> quotesCache = cacheManager.administration().getOrCreateCache("quotegame-quotes", "default");
         // Put initialization values if empty.
         if (quotesCache.isEmpty()) {
-            quotesCache.put("RHT", 187.71);
-            quotesCache.put("IBM", 140.57);
+            quotesCache.put("RHT", new Quote("RHT", 187.71));
+            quotesCache.put("IBM", new Quote("IBM", 140.57));
         }
     }
 }

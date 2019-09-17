@@ -19,6 +19,8 @@ import javax.ws.rs.sse.Sse;
 import javax.ws.rs.sse.SseBroadcaster;
 import javax.ws.rs.sse.SseEventSink;
 
+import com.redhat.quotegame.model.Quote;
+
 import io.quarkus.infinispan.client.runtime.Remote;
 import io.quarkus.scheduler.Scheduled;
 
@@ -38,7 +40,7 @@ public class QuoteResource {
 
     @Inject
     @Remote("quotegame-quotes")
-    RemoteCache<String, Double> quotesCache;
+    RemoteCache<String, Quote> quotesCache;
 
     private Sse sse = null;
     private SseBroadcaster sseBroadcaster = null;
@@ -47,9 +49,9 @@ public class QuoteResource {
     @PUT
     @Path("/{symbol}")
     public Response updateQuotePrice(@PathParam("symbol") String symbol, Double price) {
-        Double currentPrice = quotesCache.get(symbol);
-        if (currentPrice != null) {
-            quotesCache.put(symbol, price);
+        Quote currentQuote = quotesCache.get(symbol);
+        if (currentQuote != null) {
+            quotesCache.put(symbol, new Quote(symbol, price));
             return Response.ok(price).build();
         }
         return Response.status(Status.NOT_FOUND).build();
@@ -58,9 +60,9 @@ public class QuoteResource {
     @GET
     @Path("/{symbol}")
     public Response getQuotePrice(@PathParam("symbol") String symbol) {
-        Double currentPrice = quotesCache.get(symbol);
-        if (currentPrice != null) {
-            return Response.ok(currentPrice).build();
+        Quote currentQuote = quotesCache.get(symbol);
+        if (currentQuote != null) {
+            return Response.ok(currentQuote.getPrice()).build();
         }
         return Response.status(Status.NOT_FOUND).build();
     }
@@ -105,7 +107,7 @@ public class QuoteResource {
         }
     }
 
-    private String serializeEntryToJSON(Map.Entry<String, Double> entry) {
-		return "{\"symbol\": \"" + entry.getKey() + "\", \"price\": " + entry.getValue() + "}";
+    private String serializeEntryToJSON(Map.Entry<String, Quote> entry) {
+		return "{\"symbol\": \"" + entry.getKey() + "\", \"price\": " + entry.getValue().getPrice() + "}";
     } 
 }

@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import com.redhat.quotegame.model.Order;
+import com.redhat.quotegame.model.Quote;
 
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.infinispan.client.hotrod.RemoteCache;
@@ -22,7 +23,7 @@ public class QuotePriceUpdater {
     
     @Inject
     @Remote("quotegame-quotes")
-    RemoteCache<String, Double> quotesCache;
+    RemoteCache<String, Quote> quotesCache;
 
     @Incoming("orders-4-quoteprice")
     public void computeQuotePrices(Order order) {

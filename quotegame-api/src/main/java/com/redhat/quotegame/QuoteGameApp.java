@@ -7,6 +7,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import com.redhat.quotegame.model.Quote;
+
 import org.apache.kafka.common.errors.TimeoutException;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
@@ -34,11 +36,11 @@ public class QuoteGameApp {
         cacheManager.administration().getOrCreateCache("quotegame-users", "default");
         cacheManager.administration().getOrCreateCache("quotegame-portfolios", "default");
         
-        RemoteCache<String, Double> quotesCache = cacheManager.administration().getOrCreateCache("quotegame-quotes", "default");
+        RemoteCache<String, Quote> quotesCache = cacheManager.administration().getOrCreateCache("quotegame-quotes", "default");
         // Put initialization values if empty.
         if (quotesCache.isEmpty()) {
-            quotesCache.put("RHT", 187.71);
-            quotesCache.put("IBM", 140.57);
+            quotesCache.put("RHT", new Quote("RHT", 187.71));
+            quotesCache.put("IBM", new Quote("IBM", 140.57));
         }
         waitUntilStarted.countDown();
     }
