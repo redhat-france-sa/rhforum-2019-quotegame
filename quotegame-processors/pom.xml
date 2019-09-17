@@ -7,8 +7,9 @@
   <version>1.0-SNAPSHOT</version>
   <properties>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <surefire-plugin.version>2.22.0</surefire-plugin.version>
-    <quarkus.version>0.20.0</quarkus.version>
+    <surefire-plugin.version>2.22.1</surefire-plugin.version>
+    <!-- <quarkus.version>0.20.0</quarkus.version> -->
+    <quarkus.version>0.22.0</quarkus.version>
     <!-- <kogito.version>0.2.0</kogito.version> -->
     <!-- <kogito.version>8.0.0-SNAPSHOT</kogito.version> -->
     <kogito.version>0.3.0</kogito.version>

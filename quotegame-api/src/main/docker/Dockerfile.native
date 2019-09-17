@@ -7,11 +7,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.native -t quarkus/quotegame-api .
+# docker build -f src/main/docker/Dockerfile.native -t demoforum/quotegame-api .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/quotegame-api
+# docker run -i --rm -p 8080:8080 demoforum/quotegame-api
 #
 ###
 FROM registry.access.redhat.com/ubi8/ubi-minimal
