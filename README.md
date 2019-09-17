@@ -91,6 +91,26 @@ $ ./infinispan.sh
 
 You'll just have to hit `Ctrl+C` when wanting to stop these process.
 
+From a terminal window in the `quotegame-ui` folder, launch the Angular app:
+
+```sh
+$ ng serve                                                                                         
+ 10% building 4/4 modules 0 activeℹ ｢wds｣: Project is running at http://localhost:4200/webpack-dev-server/
+ℹ ｢wds｣: webpack output is served from /
+ℹ ｢wds｣: 404s will fallback to //index.html
+                                                                                                                                                                                 
+chunk {main} main.js, main.js.map (main) 48.7 kB [initial] [rendered]
+chunk {polyfills} polyfills.js, polyfills.js.map (polyfills) 296 kB [initial] [rendered]
+chunk {polyfills-es5} polyfills-es5.js, polyfills-es5.js.map (polyfills-es5) 474 kB [initial] [rendered]
+chunk {runtime} runtime.js, runtime.js.map (runtime) 6.09 kB [entry] [rendered]
+chunk {scripts} scripts.js, scripts.js.map (scripts) 178 kB [entry] [rendered]
+chunk {styles} styles.js, styles.js.map (styles) 1.26 MB [initial] [rendered]
+chunk {vendor} vendor.js, vendor.js.map (vendor) 6.27 MB [initial] [rendered]
+Date: 2019-09-17T09:26:41.477Z - Hash: 46d0d9e48ab0c8537a3e - Time: 7393ms
+** Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/ **
+ℹ ｢wdm｣: Compiled successfully.
+```
+
 From another terminal window in the `quotegame-api` folder, launch the Quarkus app:
 
 ```sh

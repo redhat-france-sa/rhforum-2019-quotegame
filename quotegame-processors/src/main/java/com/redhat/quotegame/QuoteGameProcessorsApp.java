@@ -1,4 +1,4 @@
-package com.redhat.quotegame.processors;
+package com.redhat.quotegame;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
