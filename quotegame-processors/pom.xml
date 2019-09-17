@@ -10,10 +10,11 @@
     <surefire-plugin.version>2.22.0</surefire-plugin.version>
     <quarkus.version>0.20.0</quarkus.version>
     <!-- <kogito.version>0.2.0</kogito.version> -->
-    <kogito.version>8.0.0-SNAPSHOT</kogito.version>
+    <!-- <kogito.version>8.0.0-SNAPSHOT</kogito.version> -->
+    <kogito.version>0.3.0</kogito.version>
     <maven.compiler.source>1.8</maven.compiler.source>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <repositories>
     <repository>
@@ -72,13 +73,14 @@
       <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
     </dependency>
 
-    <!-- Removed for getting 8.0.0-SNAPSHOT> of kogito -->
+    <!-- To remove for getting 8.0.0-SNAPSHOT and 0.3.0 of kogito -->
     <!--
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-kogito</artifactId>
     </dependency>
     -->
+
     <dependency>
       <groupId>org.kie.kogito</groupId>
       <artifactId>drools-core-static</artifactId>

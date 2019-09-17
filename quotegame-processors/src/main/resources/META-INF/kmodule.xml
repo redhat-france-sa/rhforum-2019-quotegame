@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
-    <kbase name="modelKB" packages="com.redhat.quotegame.model">
+    
+    <kbase name="eventProcessorsKB" equalsBehavior="identity" eventProcessingMode="stream" packages="com.redhat.quotegame.processors">
         <ksession name="modelKS"/>
+        <ksession name="quotePriceKSRT" default="true" type="stateful" clockType="realtime"/>
+    </kbase>
+    <kbase name="processorsKB" equalsBehavior="equality" packages="com.redhat.quotegame.processors">
+        <ksession name="quotePriceKS" type="stateful" />
     </kbase>
 </kmodule>
