@@ -14,19 +14,24 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 @ApplicationScoped
 public class KafkaOrderProducerManager {
 
     private Producer<String, Order> producer;
+
+    @ConfigProperty(name = "kafka.bootstrap-service")
+    String bootstrapService;
 
     @PostConstruct
     public void create() {
         producer = createProducer();
     }
 
-    public static Producer<String, Order> createProducer() {
+    protected Producer<String, Order> createProducer() {
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapService);
         props.put(ProducerConfig.CLIENT_ID_CONFIG, "quotegame-api");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, OrderSerializer.class.getName());

@@ -8,9 +8,9 @@
   <packaging>pom</packaging>
   <modules>
     <module>quotegame-model</module>
+    <module>quotegame-ui</module>
     <module>quotegame-api</module>
     <module>quotegame-processors</module>
     <module>quotegame-chaosmonkey</module>
-    <module>quotegame-ui</module>
   </modules>
 </project>
