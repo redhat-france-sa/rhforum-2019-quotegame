@@ -31,10 +31,10 @@ spec:
         resources:
           requests:
             cpu: 250m
-            memory: 200Mi
+            memory: 300Mi
           limits:
             cpu: 500m
-            memory: 300Mi
+            memory: 400Mi
         ports:
         - containerPort: 8080
           name: http
@@ -105,7 +105,7 @@ spec:
   wildcardPolicy: None
 ---
 kind: HorizontalPodAutoscaler
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2beta2
 metadata:
   name: quotegame-api-hpa
 spec:
@@ -119,4 +119,6 @@ spec:
     - type: Resource
       resource:
         name: cpu
-        targetAverageUtilization: 40
+        target:
+          type: Utilization
+          averageUtilization: 40
