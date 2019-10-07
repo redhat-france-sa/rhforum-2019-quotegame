@@ -168,7 +168,7 @@ export class DashboardPageComponent implements OnInit {
           this.quotes = res.quotes;
         },
         error: err => {
-     
+          console.log("Catch an error when loading status...");
         },
         complete: () => console.log('Observer got a complete notification'),
       }
@@ -177,32 +177,38 @@ export class DashboardPageComponent implements OnInit {
 
   connectQuoteStream(): void {
     this.backendService.getQuoteStreaming().subscribe(
-      results => {
-        var now = new Date();
-        const quotes = JSON.parse(results.data);
+      {
+        next: results => {
+          var now = new Date();
+          const quotes = JSON.parse(results.data);
 
-        this.rhChartData.dataAvailable = false;
-        this.ibmChartData.dataAvailable = false;
+          this.rhChartData.dataAvailable = false;
+          this.ibmChartData.dataAvailable = false;
 
-        quotes.forEach(quote => {
-          if (quote.symbol === 'RHT') {
-            this.rhChartData.xData.push(now);
-            this.rhChartData.yData.push(quote.price);
-            this.rhChartData.xData.splice(1, 1);
-            this.rhChartData.yData.splice(1, 1);
-            this.rhChartCardConfig.subTitle = "" + quote.price + " dollars";
-            this.prices['RHT'] = quote.price;
-          } else if (quote.symbol === 'IBM') {
-            this.ibmChartData.xData.push(now);
-            this.ibmChartData.yData.push(quote.price);
-            this.ibmChartData.xData.splice(1, 1);
-            this.ibmChartData.yData.splice(1, 1);
-            this.ibmChartCardConfig.subTitle = "" + quote.price + " dollars";
-            this.prices['IBM'] = quote.price;
-          }
-        });
-        this.rhChartData.dataAvailable = true;
-        this.ibmChartData.dataAvailable = true;
+          quotes.forEach(quote => {
+            if (quote.symbol === 'RHT') {
+              this.rhChartData.xData.push(now);
+              this.rhChartData.yData.push(quote.price);
+              this.rhChartData.xData.splice(1, 1);
+              this.rhChartData.yData.splice(1, 1);
+              this.rhChartCardConfig.subTitle = "" + quote.price + " dollars";
+              this.prices['RHT'] = quote.price;
+            } else if (quote.symbol === 'IBM') {
+              this.ibmChartData.xData.push(now);
+              this.ibmChartData.yData.push(quote.price);
+              this.ibmChartData.xData.splice(1, 1);
+              this.ibmChartData.yData.splice(1, 1);
+              this.ibmChartCardConfig.subTitle = "" + quote.price + " dollars";
+              this.prices['IBM'] = quote.price;
+            }
+          });
+          this.rhChartData.dataAvailable = true;
+          this.ibmChartData.dataAvailable = true;
+        },
+        error: err => {
+          console.log("Subscribe on error, retrying in a few seconds...");
+          setTimeout(() => this.connectQuoteStream(), 2000);
+        }
       }    
     );
   }
