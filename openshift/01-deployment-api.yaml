@@ -28,6 +28,13 @@ spec:
         env:
         - name: QUARKUS_PROFILE
           value: kube
+        resources:
+          requests:
+            cpu: 250m
+            memory: 200Mi
+          limits:
+            cpu: 500m
+            memory: 300Mi
         ports:
         - containerPort: 8080
           name: http
@@ -96,3 +103,20 @@ spec:
   port:
     targetPort: 8080-tcp
   wildcardPolicy: None
+---
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2beta1
+metadata:
+  name: quotegame-api-hpa
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    apiVersion: extensions/v1beta1
+    name: quotegame-api
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 40

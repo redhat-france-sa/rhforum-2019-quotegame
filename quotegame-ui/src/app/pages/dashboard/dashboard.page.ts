@@ -23,31 +23,31 @@ export class DashboardPageComponent implements OnInit {
   numberOfTicks: number = 30;
   today = new Date();
 
-  rhChartCardConfig: CardConfig;
-  rhQuoteCardConfig: CardConfig;
-  ibmChartCardConfig: CardConfig;
-  ibmQuoteCardConfig: CardConfig;
+  tyrChartCardConfig: CardConfig;
+  tyrQuoteCardConfig: CardConfig;
+  cybChartCardConfig: CardConfig;
+  cybQuoteCardConfig: CardConfig;
 
   chartDates: any[] = ['dates'];
 
-  rhChartConfig: SparklineChartConfig = {
-		chartId: 'rhQuotesSparkline',
+  tyrChartConfig: SparklineChartConfig = {
+		chartId: 'tyrQuotesSparkline',
 		chartHeight: 150,
 		tooltipType: 'default'
   };
-  ibmChartConfig: SparklineChartConfig = {
-		chartId: 'ibmQuotesSparkline',
+  cybChartConfig: SparklineChartConfig = {
+		chartId: 'cybQuotesSparkline',
 		chartHeight: 150,
 		tooltipType: 'default'
   };
 
-  rhChartData: SparklineChartData = {
+  tyrChartData: SparklineChartData = {
     dataAvailable: false,
     total: 100,
     xData: this.chartDates,
     yData: ['used']
   };
-  ibmChartData: SparklineChartData = {
+  cybChartData: SparklineChartData = {
     dataAvailable: false,
     total: 100,
     xData: this.chartDates,
@@ -63,28 +63,28 @@ export class DashboardPageComponent implements OnInit {
       setInterval(() => this.loadStatus(), 30000);
     }
 
-    this.rhChartCardConfig = { title: 'RHT Stock', titleBorder: false, subTitle: 'Last 3 Minutes' } as CardConfig;
-    this.ibmChartCardConfig = { title: 'IBM Stock', titleBorder: false, subTitle: 'Last 3 Minutes' } as CardConfig;
-    this.rhQuoteCardConfig = { title: 'RHT Portfolio', titleBorder: false, topBorder: true } as CardConfig;
-    this.ibmQuoteCardConfig = { title: 'IBM Portfolio', titleBorder: false, topBorder: true } as CardConfig;
+    this.tyrChartCardConfig = { title: 'TYRELL Stock', titleBorder: false, subTitle: 'Last 3 Minutes' } as CardConfig;
+    this.cybChartCardConfig = { title: 'CYBERDINE Stock', titleBorder: false, subTitle: 'Last 3 Minutes' } as CardConfig;
+    this.tyrQuoteCardConfig = { title: 'TYRELL Portfolio', titleBorder: false, topBorder: true } as CardConfig;
+    this.cybQuoteCardConfig = { title: 'CYBERDINE Portfolio', titleBorder: false, topBorder: true } as CardConfig;
 
     // Initialize charts data.
-    this.rhChartData.dataAvailable = false;
-    this.ibmChartData.dataAvailable = false;
-    this.rhChartData.xData = ['dates'];
-    this.ibmChartData.xData = ['dates'];
-    this.rhChartData.yData = ['dollars'];
-    this.ibmChartData.yData = ['dollars'];
+    this.tyrChartData.dataAvailable = false;
+    this.cybChartData.dataAvailable = false;
+    this.tyrChartData.xData = ['dates'];
+    this.cybChartData.xData = ['dates'];
+    this.tyrChartData.yData = ['dollars'];
+    this.cybChartData.yData = ['dollars'];
 
     for (let i = this.numberOfTicks - 1; i >= 0; i--) {
       var pastDate: Date = new Date(this.today.getTime() - (i * this.fiveSecLong));
-      this.rhChartData.xData.push(pastDate);
-      this.ibmChartData.xData.push(pastDate);
-      this.rhChartData.yData.push(0);
-      this.ibmChartData.yData.push(0);
+      this.tyrChartData.xData.push(pastDate);
+      this.cybChartData.xData.push(pastDate);
+      this.tyrChartData.yData.push(0);
+      this.cybChartData.yData.push(0);
     }
-    this.rhChartData.dataAvailable = true;
-    this.ibmChartData.dataAvailable = true;
+    this.tyrChartData.dataAvailable = true;
+    this.cybChartData.dataAvailable = true;
   }
 
   public isAuthenticated(): boolean {
@@ -182,28 +182,28 @@ export class DashboardPageComponent implements OnInit {
           var now = new Date();
           const quotes = JSON.parse(results.data);
 
-          this.rhChartData.dataAvailable = false;
-          this.ibmChartData.dataAvailable = false;
+          this.tyrChartData.dataAvailable = false;
+          this.cybChartData.dataAvailable = false;
 
           quotes.forEach(quote => {
-            if (quote.symbol === 'RHT') {
-              this.rhChartData.xData.push(now);
-              this.rhChartData.yData.push(quote.price);
-              this.rhChartData.xData.splice(1, 1);
-              this.rhChartData.yData.splice(1, 1);
-              this.rhChartCardConfig.subTitle = "" + quote.price + " dollars";
-              this.prices['RHT'] = quote.price;
-            } else if (quote.symbol === 'IBM') {
-              this.ibmChartData.xData.push(now);
-              this.ibmChartData.yData.push(quote.price);
-              this.ibmChartData.xData.splice(1, 1);
-              this.ibmChartData.yData.splice(1, 1);
-              this.ibmChartCardConfig.subTitle = "" + quote.price + " dollars";
-              this.prices['IBM'] = quote.price;
+            if (quote.symbol === 'TYR') {
+              this.tyrChartData.xData.push(now);
+              this.tyrChartData.yData.push(quote.price);
+              this.tyrChartData.xData.splice(1, 1);
+              this.tyrChartData.yData.splice(1, 1);
+              this.tyrChartCardConfig.subTitle = "" + quote.price + " dollars";
+              this.prices['TYR'] = quote.price;
+            } else if (quote.symbol === 'CYB') {
+              this.cybChartData.xData.push(now);
+              this.cybChartData.yData.push(quote.price);
+              this.cybChartData.xData.splice(1, 1);
+              this.cybChartData.yData.splice(1, 1);
+              this.cybChartCardConfig.subTitle = "" + quote.price + " dollars";
+              this.prices['CYB'] = quote.price;
             }
           });
-          this.rhChartData.dataAvailable = true;
-          this.ibmChartData.dataAvailable = true;
+          this.tyrChartData.dataAvailable = true;
+          this.cybChartData.dataAvailable = true;
         },
         error: err => {
           console.log("Subscribe on error, retrying in a few seconds...");

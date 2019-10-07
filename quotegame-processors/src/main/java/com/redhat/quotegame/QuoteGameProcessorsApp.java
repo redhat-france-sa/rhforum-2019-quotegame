@@ -28,8 +28,8 @@ public class QuoteGameProcessorsApp {
         RemoteCache<String, Quote> quotesCache = cacheManager.administration().getOrCreateCache("quotegame-quotes", "default");
         // Put initialization values if empty.
         if (quotesCache.isEmpty()) {
-            quotesCache.put("RHT", new Quote("RHT", 187.71));
-            quotesCache.put("IBM", new Quote("IBM", 140.57));
+            quotesCache.put("TYR", new Quote("TYR", 187.71));
+            quotesCache.put("CYB", new Quote("CYB", 140.57));
         }
     }
 }
