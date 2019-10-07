@@ -1,0 +1,24 @@
+#!/bin/bash
+source /opt/app-root/etc/generate_container_user
+
+set -e
+
+application_jar_file="$APP_FILE"
+if [ -z "$application_jar_file" ]
+then
+    # if no app file has been specified, look to see if there is a single
+    # jar file in the app root. if there is a single jar file, it gets run
+    # otherwise raise an error and exit the run script.
+    jar_files=( $(find . -maxdepth 1 -name *.jar) )
+    if [ ${#jar_files[*]} = 1 ]
+    then
+        application_jar_file=${jar_files[0]}
+    else
+        echo "No single application jar file could be detected and APP_FILE was not specified."
+        echo "--> Exiting application ..."
+        exit 1
+    fi
+fi
+
+echo "--> Starting application ..."
+java -jar $application_jar_file $APP_ARGS
