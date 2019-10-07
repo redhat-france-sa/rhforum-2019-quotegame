@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: quotegame-processors
+    app.kubernetes.io/component: quotegame-processors
+    app.kubernetes.io/instance: quotegame-processors
+    app.kubernetes.io/part-of: quotegame-app
+  name: quotegame-processors
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quotegame-processors
+  template:
+    metadata:
+      labels:
+        app: quotegame-processors
+    spec:
+      containers:
+      - name: quotegame-processors
+        image: quay.io/demoforum/quotegame-processors:latest
+        imagePullPolicy: Always
+        env:
+        - name: QUARKUS_PROFILE
+          value: kube
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        securityContext:
+          privileged: false

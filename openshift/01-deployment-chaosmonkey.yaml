@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: quotegame-choasmonkey
+    app.kubernetes.io/component: quotegame-choasmonkey
+    app.kubernetes.io/instance: quotegame-choasmonkey
+    app.kubernetes.io/part-of: quotegame-app
+  name: quotegame-choasmonkey
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quotegame-choasmonkey
+  template:
+    metadata:
+      labels:
+        app: quotegame-choasmonkey
+    spec:
+      containers:
+      - name: quotegame-choasmonkey
+        image: quay.io/demoforum/quotegame-chaosmonkey:latest
+        imagePullPolicy: Always
+        env:
+        - name: QUARKUS_PROFILE
+          value: kube
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        securityContext:
+          privileged: false

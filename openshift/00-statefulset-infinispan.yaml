@@ -1,0 +1,161 @@
+kind: Secret
+apiVersion: v1
+metadata:
+  name: infinispan-mgmt-generated-secret
+data:
+  password: VUFidUduY1xsQEpZc2J1LQ==
+  username: YWRtaW4=
+type: Opaque
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: infinispan-app-generated-secret
+data:
+  password: a3YvYU8sL3lUYkpUUUB0Sg==
+  username: ZGV2ZWxvcGVy
+type: Opaque
+---
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  annotations:
+    description: Infinispan 10.0.0 Beta (Ephemeral)
+    iconClass: icon-infinispan
+    openshift.io/display-name: Infinispan 10.0.0 Beta (Ephemeral)
+    openshift.io/documentation-url: 'http://infinispan.org/documentation/'
+  name: infinispan
+  labels:
+    template: infinispan-ephemeral
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: infinispan-pod
+      clusterName: infinispan
+      infinispan_cr: infinispan
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: infinispan-pod
+        clusterName: infinispan
+        infinispan_cr: infinispan
+    spec:
+      containers:
+        - resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          readinessProbe:
+            exec:
+              command:
+                - /usr/local/bin/is_healthy.sh
+            initialDelaySeconds: 10
+            timeoutSeconds: 80
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 5
+          terminationMessagePath: /dev/termination-log
+          name: infinispan
+          livenessProbe:
+            exec:
+              command:
+                - /usr/local/bin/is_running.sh
+            initialDelaySeconds: 10
+            timeoutSeconds: 80
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 5
+          env:
+            - name: MGMT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: infinispan-mgmt-generated-secret
+                  key: username
+            - name: MGMT_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: infinispan-mgmt-generated-secret
+                  key: password
+            - name: APP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: infinispan-app-generated-secret
+                  key: username
+            - name: APP_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: infinispan-app-generated-secret
+                  key: password
+            - name: IMAGE
+            - name: JGROUPS_PING_PROTOCOL
+              value: openshift.DNS_PING
+            - name: OPENSHIFT_DNS_PING_SERVICE_NAME
+              value: infinispan-ping
+            - name: NUMBER_OF_INSTANCE
+              value: "\x01"
+            - name: JAVA_OPTS
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: management
+              containerPort: 9990
+              protocol: TCP
+            - name: ping
+              containerPort: 8888
+              protocol: TCP
+            - name: hotrod
+              containerPort: 11222
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          terminationMessagePolicy: File
+          image: 'jboss/infinispan-server:10.0.0.Beta3'
+          args:
+            - cloud.xml
+            - '-Djboss.default.jgroups.stack=dns-ping'
+            - >-
+              -Djgroups.dns_ping.dns_query=infinispan-ping.quotegame-rhforum.svc.cluster.local
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  serviceName: ''
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: OnDelete
+  revisionHistoryLimit: 10
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: infinispan
+  labels:
+    clusterName: infinispan
+    infinispan_cr: infinispan
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: management
+      protocol: TCP
+      port: 9990
+      targetPort: 9990
+    - name: ping
+      protocol: TCP
+      port: 8888
+      targetPort: 8888
+    - name: hotrod
+      protocol: TCP
+      port: 11222
+      targetPort: 11222
+  selector:
+    app: infinispan-pod
+    clusterName: infinispan
+    infinispan_cr: infinispan
+  type: ClusterIP
+  sessionAffinity: None
