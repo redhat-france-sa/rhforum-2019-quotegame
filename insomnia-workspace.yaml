@@ -1,6 +1,6 @@
 _type: export
 __export_format: 4
-__export_date: 2019-09-17T11:32:59.299Z
+__export_date: 2019-10-09T09:54:14.766Z
 __export_source: insomnia.desktop.app:v6.6.2
 resources:
   - _id: req_5e97f6ea7c4942d3866902f42a24a804
@@ -17,8 +17,8 @@ resources:
     isPrivate: false
     metaSortKey: -1566305492217
     method: GET
-    modified: 1566305589464
-    name: Get RHT quote prices
+    modified: 1570614647332
+    name: Get TYR quote prices
     parameters: []
     parentId: fld_88cda5ce0fc140ea828e85dd99aa8f8b
     settingDisableRenderRequestBody: false
@@ -26,7 +26,7 @@ resources:
     settingRebuildPath: true
     settingSendCookies: true
     settingStoreCookies: true
-    url: http://localhost:8080/api/quote/RHT
+    url: http://localhost:8080/api/quote/TYR
     _type: request
   - _id: fld_88cda5ce0fc140ea828e85dd99aa8f8b
     created: 1566305330931
@@ -69,8 +69,8 @@ resources:
     isPrivate: false
     metaSortKey: -1566305446263
     method: PUT
-    modified: 1566305467581
-    name: Update IBM quote price
+    modified: 1570614663581
+    name: Update CYB quote price
     parameters: []
     parentId: fld_88cda5ce0fc140ea828e85dd99aa8f8b
     settingDisableRenderRequestBody: false
@@ -78,7 +78,7 @@ resources:
     settingRebuildPath: true
     settingSendCookies: true
     settingStoreCookies: true
-    url: http://localhost:8080/api/quote/IBM
+    url: http://localhost:8080/api/quote/CYB
     _type: request
   - _id: req_f4a31bb535df4fffbb5a1d1637261599
     authentication: {}
@@ -94,7 +94,7 @@ resources:
     isPrivate: false
     metaSortKey: -1566305323519
     method: PUT
-    modified: 1566328476155
+    modified: 1570614673968
     name: Update RHT quote price
     parameters: []
     parentId: fld_88cda5ce0fc140ea828e85dd99aa8f8b
@@ -103,7 +103,7 @@ resources:
     settingRebuildPath: true
     settingSendCookies: true
     settingStoreCookies: true
-    url: http://localhost:8080/api/quote/RHT
+    url: http://localhost:8080/api/quote/TYR
     _type: request
   - _id: req_700cc04ab6e94364b3bd185aaf5bac02
     authentication: {}
@@ -112,7 +112,7 @@ resources:
       text: |-
         {
         	"username": "Laurent",
-        	"quote": "RHT",
+        	"quote": "TYR",
         	"number": 5,
         	"price": 4.0,
         	"orderType": "SELL"
@@ -126,8 +126,8 @@ resources:
     isPrivate: false
     metaSortKey: -1565604170348
     method: POST
-    modified: 1566463980753
-    name: SELL 5 RHT for Laurent
+    modified: 1570614693422
+    name: SELL 5 TYR for Laurent
     parameters: []
     parentId: fld_fe1508c80797480ba54acd7c887c1016
     settingDisableRenderRequestBody: false
@@ -154,7 +154,7 @@ resources:
       text: |-
         {
         	"username": "Laurent",
-        	"quote": "RHT",
+        	"quote": "TYR",
         	"number": 5,
         	"price": 4.0,
         	"orderType": "BUY"
@@ -168,8 +168,8 @@ resources:
     isPrivate: false
     metaSortKey: -1565482481221.5
     method: POST
-    modified: 1565621878199
-    name: BUY 5 RHT for Laurent
+    modified: 1570614717434
+    name: BUY 5 TYR for Laurent
     parameters: []
     parentId: fld_fe1508c80797480ba54acd7c887c1016
     settingDisableRenderRequestBody: false

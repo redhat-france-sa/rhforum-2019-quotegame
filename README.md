@@ -9,7 +9,7 @@ A stock quote game illustrating Red Hat middleware portfolio around Kafka, Quark
 
 Here's the architecture components diagram of this repository.
 
-This stock quote game is using Infini span and Kafla as data sources backend. Infinispan distributed data grid is used for storing mutable and highly volatile informations like the users informations, the users portfolio and the current prices of all the managed quote symbols. Kafka on the other hand is used to as an append-only logs to store immutable events like user's orders and quotes prices history. 
+This stock quote game is using Infinispan and Kafla as data sources backend. Infinispan distributed data grid is used for storing mutable and highly volatile informations like the users informations, the users portfolio and the current prices of all the managed quote symbols. Kafka on the other hand is used to as an append-only logs to store immutable events like user's orders and quotes prices history. 
 
 ![](./assets/architecture.png)
 
@@ -28,7 +28,7 @@ Application also had extra components here represented in purple. They help demo
 Requirements:
 * Java 1.8.0+
 * Maven 3.6.0+
-* Docker for desktop 18.09+
+* Docker for desktop 19.03+
  
 ### Build the maven modules
 
@@ -173,5 +173,35 @@ $ mvn compile quarkus:dev
 You can now start playing around with the application! For ease of use an [Insomnia](https://insomnia.rest/) workspace is available [here](./insomnia-workspace.yaml). Just import it into Insomnia and you'll get some tests queries ready to use:
 
 ![](./assets/insomnia.png)
+
+### Build the native container images
+
+Before proceeding with docker builds, you have to install locally the different maven modules launching the `mvn clean install` from the top root directory.
+
+Then, just follow the following script (that you may want to adapt for targetting your very own Quay.io repository)
+
+```
+export $CONTAINER_REGISTRY=quay.io/demoforum
+
+cd quotegame-api
+mvn clean package -Pnative -Dnative-image.docker-build=true
+docker build -f src/main/docker/Dockerfile.native -t demoforum/quotegame-api .
+docker tag demoforum/quotegame-api:latest $CONTAINER_REGISTRY/quotegame-api:target
+docker push $CONTAINER_REGISTRY/quotegame-api:target
+
+cd ../quotegame-processors
+mvn clean package -Pnative -Dnative-image.docker-build=true
+docker build -f src/main/docker/Dockerfile.native -t demoforum/quotegame-processors .
+docker tag demoforum/quotegame-processors:latest $CONTAINER_REGISTRY/quotegame-processors:target
+docker push $CONTAINER_REGISTRY/quotegame-processors:target
+
+cd ../quotegame-chaosmonkey
+mvn clean package -Pnative -Dnative-image.docker-build=true
+docker build -f src/main/docker/Dockerfile.native -t demoforum/quotegame-chaosmonkey .
+docker tag demoforum/quotegame-chaosmonkey:latest $CONTAINER_REGISTRY/quotegame-chaosmonkey:target
+docker push $CONTAINER_REGISTRY/quotegame-chaosmonkey:target 
+```
+
+> This may take usually up to 15 minutes for building and pushing the native image depending on your laptop and network conditions. Also, be sure to allocate enough cores and memory to your Docker daemon ;-)
 
 ## How to run it for a demo?
