@@ -7,4 +7,6 @@ import com.redhat.quotegame.model.Order;
  */
 public class OrderSerializer extends JsonPojoSerializer<Order> {
     
+    public OrderSerializer() {
+    }
 }

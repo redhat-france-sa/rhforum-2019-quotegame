@@ -1,0 +1,11 @@
+[
+    {
+      "name" : "com.redhat.quotegame.util.OrderSerializer",
+      "allDeclaredConstructors" : true,
+      "allPublicConstructors" : true,
+      "allDeclaredMethods" : true,
+      "allPublicMethods" : true,
+      "allDeclaredFields" : true,
+      "allPublicFields" : true
+    }
+]

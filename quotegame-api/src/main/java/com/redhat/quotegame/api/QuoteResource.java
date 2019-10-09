@@ -84,7 +84,7 @@ public class QuoteResource {
 
     @Scheduled(every = "5s")
     public void publishQuotePrices() {
-        logger.debug("Publishing quote prices at " + LocalDateTime.now());
+        logger.info("Publishing quote prices at " + LocalDateTime.now());
 
 		if (sseBroadcaster != null) {
             // Publish a JSON array with quote prices.

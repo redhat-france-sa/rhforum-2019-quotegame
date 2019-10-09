@@ -73,6 +73,10 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-metrics</artifactId>
+    </dependency>
 
     <!-- To remove for getting 8.0.0-SNAPSHOT and 0.3.0 of kogito -->
     <!--

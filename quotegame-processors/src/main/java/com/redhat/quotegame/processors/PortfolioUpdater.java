@@ -8,6 +8,7 @@ import com.redhat.quotegame.model.OrderType;
 import com.redhat.quotegame.model.Portfolio;
 import com.redhat.quotegame.model.Quote;
 
+import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.jboss.logging.Logger;
@@ -31,6 +32,7 @@ public class PortfolioUpdater {
     @Remote("quotegame-portfolios")
     RemoteCache<String, Portfolio> portfoliosCache;
     
+    @Counted(name = "processedOrders", description = "How many orders have been processed.")
     @Incoming("orders-4-portfolio")
     public void updatePortfolio(Order order) {
         logger.info("Get new order to process...");

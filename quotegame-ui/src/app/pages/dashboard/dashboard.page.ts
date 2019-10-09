@@ -57,6 +57,9 @@ export class DashboardPageComponent implements OnInit {
   constructor(protected authService: AuthenticationService, protected backendService: BackendService) { }
 
   ngOnInit() {
+    (this.tyrChartConfig as any).color = { pattern: ['#42b883'] };
+    (this.cybChartConfig as any).color = { pattern: ['#ff7e67'] };
+
     if (this.authService.isAuthenticated()) {
       this.loadStatus();
       this.connectQuoteStream();
