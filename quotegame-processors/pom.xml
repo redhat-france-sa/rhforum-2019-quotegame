@@ -46,17 +46,6 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- Necessary to force 8.0.0-SNAPSHOT lib -->
-      <dependency>
-        <groupId>org.kie.kogito</groupId>
-        <artifactId>kogito-api</artifactId>
-        <version>${kogito.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.kie.kogito</groupId>
-        <artifactId>drools-core</artifactId>
-        <version>${kogito.version}</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -72,35 +61,6 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
-    </dependency>
-
-    <!-- To remove for getting 8.0.0-SNAPSHOT and 0.3.0 of kogito -->
-    <!--
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-kogito</artifactId>
-    </dependency>
-    -->
-
-    <dependency>
-      <groupId>org.kie.kogito</groupId>
-      <artifactId>drools-core-static</artifactId>
-      <version>${kogito.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.kogito</groupId>
-      <artifactId>drools-model-compiler</artifactId>
-      <version>${kogito.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.kie.kogito</groupId>
-          <artifactId>drools-core-dynamic</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.thoughtworks.xstream</groupId>
-          <artifactId>xstream</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
@@ -127,12 +87,6 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.kie.kogito</groupId>
-        <artifactId>kogito-maven-plugin</artifactId>
-        <version>${kogito.version}</version>
-        <extensions>true</extensions>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
