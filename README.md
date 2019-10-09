@@ -205,3 +205,11 @@ docker push $CONTAINER_REGISTRY/quotegame-chaosmonkey:target
 > This may take usually up to 15 minutes for building and pushing the native image depending on your laptop and network conditions. Also, be sure to allocate enough cores and memory to your Docker daemon ;-)
 
 ## How to run it for a demo?
+
+### Run it on your laptop
+
+...
+
+### Run if on OpenShift
+
+Be sure to have built the native container images first and then follow the instructions [here](./openshift/README.MD).

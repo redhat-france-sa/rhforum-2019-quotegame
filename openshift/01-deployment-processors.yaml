@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: quotegame-processors
-        image: quay.io/demoforum/quotegame-processors:latest
+        image: quay.io/demoforum/quotegame-processors:base
         imagePullPolicy: Always
         env:
         - name: QUARKUS_PROFILE
