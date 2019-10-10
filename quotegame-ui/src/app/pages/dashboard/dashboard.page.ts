@@ -19,6 +19,9 @@ export class DashboardPageComponent implements OnInit {
   quotes: any = {};
   prices: any = {};
 
+  lastBuy: any = {'TYR': 0, 'CYB': 0};
+  lastSell: any = {'TYR': 0, 'CYB': 0};
+
   fiveSecLong: number = (1000 * 5);
   numberOfTicks: number = 30;
   today = new Date();
@@ -128,6 +131,7 @@ export class DashboardPageComponent implements OnInit {
           } else {
             this.quotes[symbol] = this.quotes[symbol] + numOfQuotes;
           }
+          this.lastBuy[symbol] = price;
         },
         error: err => {
      
@@ -137,6 +141,10 @@ export class DashboardPageComponent implements OnInit {
     );
   }
 
+  public getLastBuy(symbol: string): number {
+    return this.lastBuy[symbol]
+  }
+
   public sell(symbol: string, numOfQuotes: number): void {
     const price = this.prices[symbol];
     this.backendService.placeOrder(this.username, false, symbol, numOfQuotes, price).subscribe(
@@ -144,6 +152,7 @@ export class DashboardPageComponent implements OnInit {
         next: res => {
           this.money = this.money + (price * numOfQuotes);
           this.quotes[symbol] = this.quotes[symbol] - numOfQuotes;
+          this.lastSell[symbol] = price;
         },
         error: err => {
      
@@ -151,6 +160,10 @@ export class DashboardPageComponent implements OnInit {
         complete: () => console.log('Observer got a complete notification'),
       }
     );
+  }
+
+  public getLastSell(symbol: string): number {
+    return this.lastSell[symbol]
   }
 
   public canSell(symbol: string, numOfQuotes: number): boolean {

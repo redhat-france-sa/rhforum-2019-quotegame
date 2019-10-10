@@ -1,7 +1,7 @@
 <div id="quotes" *ngIf="isAuthenticated()">
   <div class="row">
     <div class="col-xs-8 mb-4">
-      <h2>Buy and sell TYRELL and CYBERDINE quotes to win a prize!</h2>
+      <h2><img src="./assets/redhat.png" style="width: 40px"/> Buy and sell TYRELL and CYBERDINE quotes to win a prize!</h2>
     </div>
     <div class="col-xs-4 text-right mb-4">
       <br/>
@@ -37,6 +37,9 @@
             <button type="button" class="btn btn-warning bt-lg m-2" (click)="sell('TYR', 10)" [disabled]="!canSell('TYR', 10)">10</button>
           </div>
         </div>
+        <br/>
+        Last Buy at: {{ getLastBuy('TYR') }}<br/>
+        Last Sell at: {{ getLastSell('TYR') }}<br/>
       </pfng-card>
     </div>
   </div>
@@ -69,6 +72,9 @@
             <button type="button" class="btn btn-warning bt-lg m-2" (click)="sell('CYB', 10)" [disabled]="!canSell('CYB', 10)">10</button>
           </div>
         </div>
+        <br/>
+        Last Buy at: {{ getLastBuy('CYB') }}<br/>
+        Last Sell at: {{ getLastSell('CYB') }}<br/>
       </pfng-card>
     </div>
   </div>

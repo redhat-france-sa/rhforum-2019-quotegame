@@ -12,8 +12,14 @@ when
     $list : List( size == 3 ) from collect ( Order( orderType == OrderType.BUY , quote == $q.symbol ) )
 then
     System.out.println(drools.getRule().getName());
-    $q.setPrice($q.getPrice() + 0.5d);
-    for ( Object $o : $list){
+    // Accumulate the number of actions.
+    int n = 0;
+    for (Object $o : $list){
+        n += ((Order)$o).getNumber();
+    }
+    // Compute the new price.
+    $q.setPrice($q.getPrice() + (n * 0.25d));
+    for (Object $o : $list){
         //System.out.println("Retracting " + $o);
         delete($o);
     }
@@ -25,8 +31,15 @@ when
     $list : List( size == 3 ) from collect ( Order( orderType == OrderType.SELL , quote == $q.symbol ) )
 then
     System.out.println(drools.getRule().getName());
-    $q.setPrice($q.getPrice() - 0.5d);
-    for ( Object $o : $list){
+    // Accumulate the number of actions.
+    int n = 0;
+    for (Object $o : $list){
+        n += ((Order)$o).getNumber();
+    }
+    // Compute the new price and update only if positive.
+    double np = $q.getPrice() - (n * 0.25d);
+    if (np > 0) {$q.setPrice(np);}
+    for (Object $o : $list){
         //System.out.println("Retracting " + $o);
         delete($o);
     }
