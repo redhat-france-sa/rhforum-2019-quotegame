@@ -15,6 +15,10 @@ import javax.ws.rs.core.Response.Status;
 
 import io.quarkus.infinispan.client.runtime.Remote;
 import org.infinispan.client.hotrod.RemoteCache;
+import org.infinispan.client.hotrod.Search;
+import org.infinispan.query.dsl.QueryFactory;
+import org.infinispan.query.dsl.Query;
+import org.infinispan.query.dsl.SortOrder;
 import org.jboss.logging.Logger;
 
 import com.redhat.quotegame.model.Portfolio;
@@ -49,5 +53,16 @@ public class PortfolioResource {
     public List<Portfolio> getAllPortfolios() {
         return portfoliosCache.values().stream()
             .collect(Collectors.toList());
+    }
+
+    @GET
+    @Path("/tops")
+    public List<Portfolio> getTopPortfolios() {
+        QueryFactory qf = Search.getQueryFactory(portfoliosCache);
+        Query query = qf.from(Portfolio.class)
+            .orderBy("money", SortOrder.DESC)
+            .maxResults(5)
+            .build();
+        return query.list();
     }
 }
