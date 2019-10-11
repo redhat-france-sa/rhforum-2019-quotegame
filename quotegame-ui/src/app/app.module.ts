@@ -6,7 +6,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CardModule } from 'patternfly-ng/card';
 import { SparklineChartModule } from 'patternfly-ng/chart'
-import { VerticalNavigationModule } from 'patternfly-ng/navigation';
 import { BsDropdownConfig, BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 
@@ -15,6 +14,7 @@ import { AppComponent } from './app.component';
 
 import { AuthenticationServiceProvider } from './services/auth.service.provider';
 import { LocalStorageService } from './services/local-storage.service';
+import { VerticalNavComponent } from './components/vertical-nav/vertical-nav.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
 import { DashboardPageComponent } from './pages/dashboard/dashboard.page';
 
@@ -25,13 +25,12 @@ import { DashboardPageComponent } from './pages/dashboard/dashboard.page';
     HttpClientModule,
     FormsModule,
     StorageServiceModule,
-    VerticalNavigationModule,
     BsDropdownModule.forRoot(),
     CardModule,
     SparklineChartModule
   ],
   declarations: [
-    AppComponent, RegisterUserComponent, DashboardPageComponent
+    AppComponent, VerticalNavComponent, RegisterUserComponent, DashboardPageComponent
   ],
   providers: [
     LocalStorageService,

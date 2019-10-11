@@ -1,46 +1,7 @@
-<div class="layout-pf layout-pf-fixed faux-layout">
-  <pfng-vertical-navigation id="myNavigation"
-        [brandAlt]="'Red Hat Quote Game'"
-        [contentContainer]="contentContainer"
-        [items]="navigationItems"
-        [persistentSecondary]="false"
-        [pinnableMenus]="true"
-        [showBadges]="true"
-        [showIcons]="true"
-        [updateActiveItemsOnClick]="true"
-        (onItemClickEvent)="onItemClicked($event)"
-        (onNavigationEvent)="onNavigation($event)">
-    <div>
-      <ul class="nav navbar-nav navbar-right navbar-iconic">
-        <li class="dropdown" dropdown>
-          <a class="dropdown-toggle nav-item-iconic" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" dropdownToggle>
-            <span title="Help" class="fa pficon-help"></span>
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" *dropdownMenu>
-            <li><a href="#">Help</a></li>
-            <li><a href="#">About</a></li>
-          </ul>
-        </li>
-        <li class="dropdown" dropdown *ngIf="isAuthenticated()">
-          <button class="btn btn-link dropdown-toggle nav-item-iconic" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <span title="Username" class="fa pficon-user"></span>
-            <span class="dropdown-title">
-                {{ getAuthenticatedUser() }} <span class="caret"></span>
-            </span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <li><a (click)="logout()">Logout</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </pfng-vertical-navigation>
-  <div #contentContainer 
-      class="container-fluid container-cards-pf container-pf-nav-pf-vertical 
-          content-page-container nav-pf-vertical-with-badges"
-      style="background-color: white;"> 
+<div>
+  <vertical-nav></vertical-nav>
+  <div class="container-fluid container-cards-pf container-pf-nav-pf-vertical">
     <register-user *ngIf="!isAuthenticated()"></register-user>
-    <router-outlet></router-outlet>
+    <router-outlet *ngIf="isAuthenticated()"></router-outlet>
   </div>
 </div>
