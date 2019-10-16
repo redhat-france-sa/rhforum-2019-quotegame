@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/part-of: quotegame-app
   name: quotegame-choasmonkey
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: quotegame-choasmonkey
