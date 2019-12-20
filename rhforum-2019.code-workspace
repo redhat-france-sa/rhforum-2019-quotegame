@@ -1,0 +1,45 @@
+{
+	"folders": [
+		{
+			"name": "quotegame-api",
+			"path": "quotegame-api"
+		},
+		{
+			"name": "quotegame-chaosmonkey",
+			"path": "quotegame-chaosmonkey"
+		},
+		{
+			"name": "quotegame-model",
+			"path": "quotegame-model"
+		},
+		{
+			"name": "quotegame-processors",
+			"path": "quotegame-processors"
+		},
+		{
+			"name": "quotegame-ui",
+			"path": "quotegame-ui"
+		},
+		{
+			"name": "quotegame-userbot",
+			"path": "quotegame-userbot"
+		},
+		{
+			"name": "rhforum-2019",
+			"path": "."
+		},
+		{
+			"name": "istio-demos",
+			"path": "/Users/lbroudou/Development/github/istio-demos"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/.classpath": true,
+			"**/.project": true,
+			"**/.settings": true,
+			"**/.factorypath": true
+		},
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}
