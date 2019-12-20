@@ -13,6 +13,14 @@
 			"path": "quotegame-model"
 		},
 		{
+			"name": "quotegame-rebalancer",
+			"path": "quotegame-rebalancer"
+		},
+		{
+			"name": "quotegame-priceupdater",
+			"path": "quotegame-priceupdater"
+		},
+		{
 			"name": "quotegame-processors",
 			"path": "quotegame-processors"
 		},

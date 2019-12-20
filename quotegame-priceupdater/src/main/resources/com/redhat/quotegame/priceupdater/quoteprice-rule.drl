@@ -1,0 +1,45 @@
+package com.redhat.quotegame.priceupdater
+
+import com.redhat.quotegame.model.Order
+import com.redhat.quotegame.model.OrderType
+import com.redhat.quotegame.model.Quote
+import java.util.List
+
+rule "3 BUY Orders of same Quote"
+when
+    $q : Quote()
+    $list : List( size == 3 ) from collect ( Order( orderType == OrderType.BUY , quote == $q.symbol ) )
+then
+    System.out.println(drools.getRule().getName());
+    // Accumulate the number of actions.
+    int n = 0;
+    for (Object $o : $list){
+        n += ((Order)$o).getNumber();
+    }
+    // Compute the new price.
+    $q.setPrice($q.getPrice() + (n * 0.25d));
+    for (Object $o : $list){
+        //System.out.println("Retracting " + $o);
+        delete($o);
+    }
+end
+
+rule "3 SELL Orders of same Quote"
+when
+    $q : Quote()
+    $list : List( size == 3 ) from collect ( Order( orderType == OrderType.SELL , quote == $q.symbol ) )
+then
+    System.out.println(drools.getRule().getName());
+    // Accumulate the number of actions.
+    int n = 0;
+    for (Object $o : $list){
+        n += ((Order)$o).getNumber();
+    }
+    // Compute the new price and update only if positive.
+    double np = $q.getPrice() - (n * 0.25d);
+    if (np > 0) {$q.setPrice(np);}
+    for (Object $o : $list){
+        //System.out.println("Retracting " + $o);
+        delete($o);
+    }
+end
