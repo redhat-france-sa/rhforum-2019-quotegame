@@ -12,6 +12,7 @@ import com.redhat.quotegame.model.Quote;
 import org.apache.kafka.common.errors.TimeoutException;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +36,7 @@ public class QuoteGameApp {
         logger.info("Create or get caches named quotegame-users, quotegame-portfolios with the default configuration");
         cacheManager.administration().getOrCreateCache("quotegame-users", "default");
         cacheManager.administration().getOrCreateCache("quotegame-portfolios", "default");
-        
+
         RemoteCache<String, Quote> quotesCache = cacheManager.administration().getOrCreateCache("quotegame-quotes", "default");
         // Put initialization values if empty.
         if (quotesCache.isEmpty()) {

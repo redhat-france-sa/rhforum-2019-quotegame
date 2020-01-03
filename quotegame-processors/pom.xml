@@ -4,15 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.redhat.quotegame</groupId>
   <artifactId>quotegame-processors</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>2.0-SNAPSHOT</version>
   <properties>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <surefire-plugin.version>2.22.1</surefire-plugin.version>
     <!-- <quarkus.version>0.20.0</quarkus.version> -->
-    <quarkus.version>0.22.0</quarkus.version>
-    <!-- <kogito.version>0.2.0</kogito.version> -->
-    <!-- <kogito.version>8.0.0-SNAPSHOT</kogito.version> -->
-    <kogito.version>0.3.0</kogito.version>
+    <!-- <quarkus.version>0.22.0</quarkus.version> -->
+    <quarkus.version>1.1.0.Final</quarkus.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -46,17 +44,6 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- Necessary to force 8.0.0-SNAPSHOT lib -->
-      <dependency>
-        <groupId>org.kie.kogito</groupId>
-        <artifactId>kogito-api</artifactId>
-        <version>${kogito.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.kie.kogito</groupId>
-        <artifactId>drools-core</artifactId>
-        <version>${kogito.version}</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -71,40 +58,16 @@
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-infinispan-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-metrics</artifactId>
-    </dependency>
-
-    <!-- To remove for getting 8.0.0-SNAPSHOT and 0.3.0 of kogito -->
-    <!--
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-kogito</artifactId>
-    </dependency>
-    -->
-
-    <dependency>
-      <groupId>org.kie.kogito</groupId>
-      <artifactId>drools-core-static</artifactId>
-      <version>${kogito.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.kogito</groupId>
-      <artifactId>drools-model-compiler</artifactId>
-      <version>${kogito.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.kie.kogito</groupId>
-          <artifactId>drools-core-dynamic</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.thoughtworks.xstream</groupId>
-          <artifactId>xstream</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
@@ -131,12 +94,6 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.kie.kogito</groupId>
-        <artifactId>kogito-maven-plugin</artifactId>
-        <version>${kogito.version}</version>
-        <extensions>true</extensions>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
