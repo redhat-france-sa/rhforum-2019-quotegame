@@ -1,0 +1,69 @@
+<infinispan xmlns="urn:infinispan:config:10.0" xsi:schemaLocation="
+        urn:infinispan:config:10.0 http://www.infinispan.org/schemas/infinispan-config-10.0.xsd
+        urn:infinispan:server:10.0 http://www.infinispan.org/schemas/infinispan-server-10.0.xsd
+        urn:org:jgroups http://www.jgroups.org/schema/jgroups-4.0.xsd" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+  <jgroups>
+    <stack-file name="image-tcp" path="jgroups-tcp.xml" />
+    <stack-file name="relay-global" path="jgroups-relay.xml"/>
+    <stack name="xsite" extends="image-tcp">
+      <jgroups:relay.RELAY2 xmlns:jgroups="urn:org.jgroups" site="${app.site}" max_site_masters="1000" can_become_site_master="true"/>
+      <remote-sites default-stack="relay-global">
+        <remote-site name="SITE1" />
+        <remote-site name="SITE2" />
+      </remote-sites>
+    </stack>
+  </jgroups>
+
+  <cache-container>
+    <transport cluster="infinispan" stack="xsite" />
+    <!-- template configurations -->
+    <distributed-cache-configuration name="default">
+      <backups>
+        <backup site="SITE1" strategy="ASYNC" failure-policy="WARN">
+          <take-offline after-failures="50" min-wait="10000"/>
+        </backup>
+        <backup site="SITE2" strategy="ASYNC" failure-policy="WARN">
+          <take-offline after-failures="50" min-wait="10000"/>
+        </backup>
+      </backups>
+    </distributed-cache-configuration>
+  </cache-container>
+
+  <server xmlns="urn:infinispan:server:10.0">
+    <interfaces>
+      <interface name="public">
+        <inet-address value="${infinispan.bind.address:127.0.0.1}" />
+      </interface>
+    </interfaces>
+
+    <socket-bindings default-interface="public" port-offset="${infinispan.socket.binding.port-offset:0}">
+      <socket-binding name="default" port="${infinispan.bind.port:11222}" />
+    </socket-bindings>
+
+    <security>
+      <security-realms>
+        <security-realm name="default">
+          <properties-realm groups-attribute="Roles">
+            <user-properties path="users.properties" relative-to="infinispan.server.config.path" />
+            <group-properties path="groups.properties" relative-to="infinispan.server.config.path" />
+          </properties-realm>
+        </security-realm>
+      </security-realms>
+    </security>
+
+    <endpoints socket-binding="default" security-realm="default">
+      <hotrod-connector name="hotrod">
+        <authentication security-realm="default">
+          <sasl mechanisms="SCRAM-SHA-512 SCRAM-SHA-384 SCRAM-SHA-256 SCRAM-SHA-1 DIGEST-SHA-512 DIGEST-SHA-384 DIGEST-SHA-256 DIGEST-SHA DIGEST-MD5 CRAM-MD5 PLAIN" qop="auth" server-name="infinispan">
+            <property name="com.sun.security.sasl.digest.realm">default</property>
+          </sasl>
+        </authentication>
+      </hotrod-connector>
+      <rest-connector name="rest">
+        <authentication mechanisms="DIGEST" security-realm="default" />
+      </rest-connector>
+    </endpoints>
+  </server>
+</infinispan>

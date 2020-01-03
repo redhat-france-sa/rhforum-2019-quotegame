@@ -1,0 +1,8 @@
+xsite:
+  address: docker.for.mac.localhost
+  name: SITE1
+  port: 7200
+  backups:
+    - address: docker.for.mac.localhost
+      name: SITE2
+      port: 17200

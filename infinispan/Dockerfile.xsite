@@ -1,0 +1,5 @@
+FROM infinispan/server:10.0.1.Final
+
+ADD *.properties /opt/infinispan/server/conf/
+ADD jgroups-*.xml /opt/infinispan/server/conf/
+COPY infinispan-xsitexml /opt/infinispan/server/conf/infinispan.xml
