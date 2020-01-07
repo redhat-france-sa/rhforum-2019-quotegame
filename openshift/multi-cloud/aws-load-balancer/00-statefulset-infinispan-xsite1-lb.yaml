@@ -1,0 +1,208 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  annotations:
+    description: Infinispan 10.0.1 (Ephemeral)
+    iconClass: icon-infinispan
+    openshift.io/display-name: Infinispan 10.0.1 (Ephemeral)
+    openshift.io/documentation-url: 'http://infinispan.org/documentation/'
+  name: infinispan
+  labels:
+    template: infinispan-ephemeral
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: infinispan-pod
+      clusterName: infinispan
+      infinispan_cr: infinispan
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: infinispan-pod
+        clusterName: infinispan
+        infinispan_cr: infinispan
+    spec:
+      containers:
+        - name: infinispan
+          image: 'quay.io/demoforum/infinispan-xsite:latest'
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1024Mi
+          readinessProbe:
+            exec:
+              command:
+                - /opt/infinispan/bin/readinessProbe.sh
+            initialDelaySeconds: 10
+            timeoutSeconds: 80
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 5
+          terminationMessagePath: /dev/termination-log
+          livenessProbe:
+            exec:
+              command:
+                - /opt/infinispan/bin/livenessProbe.sh
+            initialDelaySeconds: 10
+            timeoutSeconds: 80
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 5
+          env:
+            - name: SITE
+              value: SITE1
+            - name: EXTERNAL_ADDR
+              value: infinispan-site1.quotegame.svc.cluster.local
+            - name: INITIAL_HOSTS
+              value: infinispan.quotegame.svc.cluster.local[7900],infinispan-site2.quotegame.svc.cluster.local[7900]
+            - name: INTERNAL_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: JGROUPS_PING_PROTOCOL
+              value: openshift.DNS_PING
+            - name: OPENSHIFT_DNS_PING_SERVICE_NAME
+              value: infinispan-ping
+            - name: NUMBER_OF_INSTANCE
+              value: "\x01"
+            - name: JAVA_OPTS
+          command:
+            - "/opt/infinispan/bin/server.sh"
+          args:
+            - "-Dinfinispan.bind.address=$(INTERNAL_POD_IP)"
+            - "-Djboss.default.jgroups.stack=dns-ping"
+            - "-Djgroups.dns.query=infinispan-ping.quotegame.svc.cluster.local"
+            - "-Dapp.site=$(SITE)"
+            - "-Djgroups.external.addr=$(EXTERNAL_ADDR)"
+            - "-Djgroups.initial.hosts=$(INITIAL_HOSTS)"
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: management
+              containerPort: 9990
+              protocol: TCP
+            - name: jgroups
+              containerPort: 7900
+              protocol: TCP
+            - name: ping
+              containerPort: 8888
+              protocol: TCP
+            - name: hotrod
+              containerPort: 11222
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          terminationMessagePolicy: File
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  serviceName: ''
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: OnDelete
+  revisionHistoryLimit: 10
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: infinispan
+  labels:
+    clusterName: infinispan
+    infinispan_cr: infinispan
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: management
+      protocol: TCP
+      port: 9990
+      targetPort: 9990
+    - name: jgroups
+      protocol: TCP
+      port: 7900
+      targetPort: 7900
+    - name: hotrod
+      protocol: TCP
+      port: 11222
+      targetPort: 11222
+  selector:
+    app: infinispan-pod
+    clusterName: infinispan
+    infinispan_cr: infinispan
+  type: ClusterIP
+  sessionAffinity: None
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: infinispan-site1
+  labels:
+    clusterName: infinispan
+    infinispan_cr: infinispan
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+spec:
+  ports:
+    - name: jgroups
+      protocol: TCP
+      port: 7900
+      targetPort: 7900
+  selector:
+    app: infinispan-pod
+    clusterName: infinispan
+    infinispan_cr: infinispan
+  type: LoadBalancer
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: infinispan-ping
+  labels:
+    clusterName: infinispan
+    infinispan_cr: infinispan
+spec:
+  ports:
+    - name: ping
+      protocol: TCP
+      port: 8888
+      targetPort: 8888
+  selector:
+    app: infinispan-pod
+    clusterName: infinispan
+    infinispan_cr: infinispan
+  type: ClusterIP
+  sessionAffinity: None
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: infinispan-headless
+  labels:
+    clusterName: infinispan
+    infinispan_cr: infinispan
+  annotations:
+    description: 'Headless service for StatefulSets'
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: hotrod
+      protocol: TCP
+      port: 11222
+      targetPort: 11222
+  selector:
+    app: infinispan-pod
+    clusterName: infinispan
+    infinispan_cr: infinispan
+  clusterIP: None

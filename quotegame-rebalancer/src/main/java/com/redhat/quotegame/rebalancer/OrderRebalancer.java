@@ -1,5 +1,7 @@
 package com.redhat.quotegame.rebalancer;
 
+import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -24,7 +26,7 @@ public class OrderRebalancer extends RouteBuilder {
     String kafkaBootstrapServers;
 
     @ConfigProperty(name = "priceUpdater.endpoints", defaultValue = "localhost:8083")
-    String[] priceUpdaterEndpoints;
+    List<String> priceUpdaterEndpoints;
 
     @Override
     public void configure() throws Exception {
@@ -35,6 +37,6 @@ public class OrderRebalancer extends RouteBuilder {
             .marshal().json()
             .loadBalance()
             .failover()
-            .to(priceUpdaterEndpoints);
+            .to(priceUpdaterEndpoints.toArray(new String[0]));
     }
 }

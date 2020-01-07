@@ -12,7 +12,6 @@ import com.redhat.quotegame.model.Quote;
 import org.apache.kafka.common.errors.TimeoutException;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

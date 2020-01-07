@@ -66,7 +66,7 @@ export class DashboardPageComponent implements OnInit {
     if (this.authService.isAuthenticated()) {
       this.loadStatus();
       this.connectQuoteStream();
-      setInterval(() => this.loadStatus(), 30000);
+      setInterval(() => this.loadStatus(), 5000);
     }
 
     this.tyrChartCardConfig = { title: 'TYRELL Stock', titleBorder: false, subTitle: 'Last 3 Minutes' } as CardConfig;

@@ -1,0 +1,82 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: quotegame-rebalancer
+    app.kubernetes.io/component: integration
+    app.kubernetes.io/instance: quotegame-rebalancer
+    app.kubernetes.io/part-of: quotegame-app
+    app.openshift.io/runtime: java
+  annotations:
+    app.openshift.io/connects-to: 'my-cluster-kafka'
+  name: quotegame-rebalancer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quotegame-rebalancer
+  template:
+    metadata:
+      labels:
+        app: quotegame-rebalancer
+    spec:
+      containers:
+      - name: quotegame-rebalancer
+        image: quay.io/demoforum/quotegame-rebalancer:multi-cloud
+        imagePullPolicy: Always
+        env:
+        - name: QUARKUS_PROFILE
+          value: kube
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        volumeMounts:                                               
+        - name: quarkus-config-volume                               
+          mountPath: /deployments/config
+        securityContext:
+          privileged: false
+      volumes:                                                      
+        - name: quarkus-config-volume                               
+          configMap:                                                
+            name: quotegame-rebalancer-config
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: quotegame-rebalancer
+  labels:
+    app: quotegame-rebalancer
+    app.kubernetes.io/component: quotegame-rebalancer
+    app.kubernetes.io/instance: quotegame-rebalancer
+    app.kubernetes.io/part-of: quotegame-app
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: quotegame-rebalancer
+  type: ClusterIP
+  sessionAffinity: None
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: quotegame-rebalancer
+  labels:
+    app: quotegame-rebalancer
+    app.kubernetes.io/component: quotegame-rebalancer
+    app.kubernetes.io/instance: quotegame-rebalancer
+    app.kubernetes.io/part-of: quotegame-app
+  annotations:
+    openshift.io/host.generated: 'true'
+spec:
+  to:
+    kind: Service
+    name: quotegame-rebalancer
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  wildcardPolicy: None

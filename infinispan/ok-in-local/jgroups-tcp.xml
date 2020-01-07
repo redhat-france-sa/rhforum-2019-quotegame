@@ -1,7 +1,7 @@
 <config xmlns="urn:org:jgroups" xsi:schemaLocation="urn:org:jgroups http://www.jgroups.org/schema/jgroups-4.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <TCP bind_addr="${infinispan.bind.address:127.0.0.1}" bind_port="7800" enable_diagnostics="false" thread_naming_pattern="pl" send_buf_size="640k" sock_conn_timeout="300" bundler_type="no-bundler" port_range="0" thread_pool.min_threads="0" thread_pool.max_threads="200" thread_pool.keep_alive_time="60000" />
-  <!-- <MPING bind_addr="${infinispan.bind.address:127.0.0.1}" mcast_addr="228.2.4.6" mcast_port="45700" ip_ttl="2" /> -->
-  <dns.DNS_PING dns_query="${jgroups.dns.query:infinispan-ping.quotegame.svc.cluster.local}" />
+  <MPING bind_addr="${infinispan.bind.address:127.0.0.1}" mcast_addr="228.2.4.6" mcast_port="45700" ip_ttl="2" />
+  <!-- <dns.DNS_PING dns_query="${jgroups.dns.query:infinispan-ping.quotegame.svc.cluster.local}" /> -->
   <MERGE3 min_interval="10000" max_interval="30000" />
   <FD_SOCK client_bind_port="57600" start_port="57600" />
   <FD_ALL timeout="10000" interval="2000" timeout_check_interval="1000" />

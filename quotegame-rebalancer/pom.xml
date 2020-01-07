@@ -59,11 +59,13 @@
       <artifactId>quotegame-model</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <!--
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-infinispan-client</artifactId>
       <scope>provided</scope>
     </dependency>
+    -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-metrics</artifactId>
@@ -139,7 +141,7 @@
                 <configuration>
                   <enableHttpUrlHandler>true</enableHttpUrlHandler>
                   <additionalBuildArgs>
-                    <additionalBuildArg>-H:ReflectionConfigurationFiles=/project/classes/reflection-config.json</additionalBuildArg>
+                    <additionalBuildArg>-H:ReflectionConfigurationFiles=/project/reflection-config.json</additionalBuildArg>
                   </additionalBuildArgs>
                 </configuration>
               </execution>

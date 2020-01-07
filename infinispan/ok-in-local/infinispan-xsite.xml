@@ -8,7 +8,7 @@
     <stack-file name="image-tcp" path="jgroups-tcp.xml" />
     <stack-file name="relay-global" path="jgroups-relay.xml"/>
     <stack name="xsite" extends="image-tcp">
-      <relay.RELAY2 xmlns="urn:org.jgroups" site="${app.site}" max_site_masters="1000" can_become_site_master="true"/>
+      <jgroups:relay.RELAY2 xmlns:jgroups="urn:org.jgroups" site="${app.site}" max_site_masters="1000" can_become_site_master="true"/>
       <remote-sites default-stack="relay-global">
         <remote-site name="SITE1" />
         <remote-site name="SITE2" />

@@ -1,0 +1,18 @@
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2beta2
+metadata:
+  name: quotegame-api-hpa
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    apiVersion: extensions/v1beta1
+    name: quotegame-api
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80

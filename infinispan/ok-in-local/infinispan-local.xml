@@ -1,47 +1,23 @@
-<infinispan xmlns="urn:infinispan:config:10.0" xsi:schemaLocation="
-        urn:infinispan:config:10.0 http://www.infinispan.org/schemas/infinispan-config-10.0.xsd
-        urn:infinispan:server:10.0 http://www.infinispan.org/schemas/infinispan-server-10.0.xsd
-        urn:org:jgroups http://www.jgroups.org/schema/jgroups-4.0.xsd" 
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  
+<infinispan xmlns="urn:infinispan:config:10.0" xsi:schemaLocation="urn:infinispan:config:10.0 http://www.infinispan.org/schemas/infinispan-config-10.0.xsd
+                              urn:infinispan:server:10.0 http://www.infinispan.org/schemas/infinispan-server-10.0.xsd
+                              urn:org:jgroups http://www.jgroups.org/schema/jgroups-4.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <jgroups>
     <stack-file name="image-tcp" path="jgroups-tcp.xml" />
-    <stack-file name="relay-global" path="jgroups-relay.xml"/>
-    <stack name="xsite" extends="image-tcp">
-      <relay.RELAY2 xmlns="urn:org.jgroups" site="${app.site}" max_site_masters="1000" can_become_site_master="true"/>
-      <remote-sites default-stack="relay-global">
-        <remote-site name="SITE1" />
-        <remote-site name="SITE2" />
-      </remote-sites>
-    </stack>
   </jgroups>
-
   <cache-container>
-    <transport cluster="infinispan" stack="xsite" />
+    <transport cluster="infinispan" stack="image-tcp" />
     <!-- template configurations -->
-    <distributed-cache-configuration name="default">
-      <backups>
-        <backup site="SITE1" strategy="ASYNC" failure-policy="WARN">
-          <take-offline after-failures="50" min-wait="10000"/>
-        </backup>
-        <backup site="SITE2" strategy="ASYNC" failure-policy="WARN">
-          <take-offline after-failures="50" min-wait="10000"/>
-        </backup>
-      </backups>
-    </distributed-cache-configuration>
+    <local-cache-configuration name="default"/>
   </cache-container>
-
   <server xmlns="urn:infinispan:server:10.0">
     <interfaces>
       <interface name="public">
         <inet-address value="${infinispan.bind.address:127.0.0.1}" />
       </interface>
     </interfaces>
-
-    <socket-bindings default-interface="public" port-offset="${infinispan.socket.binding.port-offset:0}">
+    <socket-bindings default-interface="public" port-offset="0">
       <socket-binding name="default" port="${infinispan.bind.port:11222}" />
     </socket-bindings>
-
     <security>
       <security-realms>
         <security-realm name="default">
@@ -52,7 +28,6 @@
         </security-realm>
       </security-realms>
     </security>
-
     <endpoints socket-binding="default" security-realm="default">
       <hotrod-connector name="hotrod">
         <authentication security-realm="default">
