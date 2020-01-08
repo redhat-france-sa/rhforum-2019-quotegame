@@ -1,0 +1,9 @@
+apiVersion: containo.us/v1alpha1
+kind: Traefikee
+metadata:
+  name: traefikee
+spec:
+  clustername: traefikee-site2
+  image: containous/traefikee:v1.3.0-multi-cloud
+  controllers: 1
+  proxies: 2

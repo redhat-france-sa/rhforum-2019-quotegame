@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefikee-ping
+  namespace: traefikee
+spec:
+  type: ClusterIP
+  ports:
+  - name: ping
+    port: 4545
+    protocol: TCP
+    targetPort: 4545
+  selector:
+    component: data-nodes
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ping
+  namespace: traefikee
+  annotations:
+    kubernetes.io/ingress.class: 'traefik'
+spec:
+  rules:
+    - http:
+        paths:
+          - path: "/ping"
+            backend:
+              serviceName: traefikee-ping
+              servicePort: 4545
