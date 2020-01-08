@@ -3,7 +3,7 @@ kind: Traefikee
 metadata:
   name: traefikee
 spec:
-  appName: traefikee-site1
+  clustername: traefikee-site1
   image: containous/traefikee:v1.3.0-multi-cloud
   controllers: 1
   proxies: 2
