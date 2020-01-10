@@ -24,3 +24,34 @@ argocd --insecure --grpc-web login ${ARGOCD_ROUTE}:443 --username admin --passwo
 
 # Update admin's password
 argocd --insecure --grpc-web --server ${ARGOCD_ROUTE}:443 account update-password --current-password ${ARGOCD_SERVER_PASSWORD} --new-password admin
+
+
+
+
+# Re-login 
+argocd --insecure --grpc-web login ${ARGOCD_ROUTE}:443 --username admin --password admin
+
+# Defining contexts for cluster1 and cluster2
+oc config set-context cluster1 --cluster=api-cluster-paris-a000-paris-a000-example-opentlc-com:6443 --user=opentlc-mgr/api-cluster-paris-a000-paris-a000-example-opentlc-com:6443 --namespace=quotegame
+
+oc config set-context cluster2 --cluster=api-cluster-paris-4220-paris-4220-example-opentlc-com:6443 --user=opentlc-mgr/api-cluster-paris-4220-paris-4220-example-opentlc-com:6443 --namespace=quotegame
+
+# Adding cluster 1 and cluster2
+argocd --insecure --grpc-web cluster add cluster1
+argocd --insecure --grpc-web cluster add cluster2
+
+
+# Adding a repository
+argocd repo add https://github.com/redhat-france-sa/rhforum-2019-quotegame.git
+
+# Adding a project
+argocd proj create quotegame --description 'Quotegame project'
+argocd proj add-source quotegame https://github.com/redhat-france-sa/rhforum-2019-quotegame.git
+argocd proj add-destination quotegame https://api.cluster-paris-a000.paris-a000.example.opentlc.com:6443 ''
+argocd proj add-destination quotegame https://api.cluster-paris-4220.paris-4220.example.opentlc.com:6443 ''
+
+# Create the application on cluster1
+argocd app create --project quotegame --name cluster1-quotegame-prod --repo https://github.com/redhat-france-sa/rhforum-2019-quotegame.git --path argocd/manifests/multi-cloud/base --dest-server https://api.cluster-paris-a000.paris-a000.example.opentlc.com:6443 --dest-namespace quotegame-prod --revision multi-cloud
+
+# Create the application on cluster2
+argocd app create --project quotegame --name cluster2-quotegame-prod --repo https://github.com/redhat-france-sa/rhforum-2019-quotegame.git --path argocd/manifests/multi-cloud/base --dest-server https://api.cluster-paris-4220.paris-4220.example.opentlc.com:6443 --dest-namespace quotegame-prod --revision multi-cloud

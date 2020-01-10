@@ -83,7 +83,7 @@ public class QuotePriceUpdater {
         if (ksession.getFactCount() > 5) {
             ksession.delete(lastOrdersHandles.remove());
         }
-
+        
         return Response.ok(order).build();
     }
 }
