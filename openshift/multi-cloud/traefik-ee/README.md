@@ -51,7 +51,7 @@ deployment.apps/traefikee-operator created
 [...]
 ```
 
-Wait for aminute to have the operator deployed. You should end up with something like this on both clusters:
+Wait for a minute to have the operator deployed. You should end up with something like this on both clusters:
 
 ```
 NAME                                   READY     STATUS    RESTARTS   AGE
