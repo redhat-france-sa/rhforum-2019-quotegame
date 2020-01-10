@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quotegame-rebalancer-config
+data:
+  application.properties: |-
+    %kube.priceUpdater.endpoints: netty-http:http://quotegame-priceupdater-site1:8080/api/order,netty-http:http://quotegame-priceupdater:8080/api/order
