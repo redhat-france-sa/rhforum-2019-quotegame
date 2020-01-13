@@ -9,6 +9,10 @@ export class BackendService {
 
   constructor(private http: HttpClient, private zone: NgZone) {}
 
+  public getConfig(): Observable<any> {
+    return this.http.get<any>(this.rootUrl + '/config');
+  }
+
   public getUserPortfolio(username: string): Observable<any> {
     return this.http.get<any>(this.rootUrl + '/portfolio/' + username);
   }
