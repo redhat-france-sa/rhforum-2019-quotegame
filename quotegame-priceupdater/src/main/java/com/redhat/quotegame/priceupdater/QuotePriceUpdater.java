@@ -14,7 +14,9 @@ import javax.ws.rs.core.Response;
 
 import com.redhat.quotegame.model.Order;
 import com.redhat.quotegame.model.Quote;
+import com.redhat.quotegame.priceupdater.model.OrderListSnapshot;
 
+import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.jboss.logging.Logger;
 
@@ -50,6 +52,34 @@ public class QuotePriceUpdater {
     @Remote("quotegame-quotes")
     RemoteCache<String, Quote> quotesCache;
 
+    @Inject
+    KafkaOrderListSnapshotProducerManager orderListSnapshotProducer;
+
+    @Incoming("workingmemory-snapshots-in")
+    public void syncWorkingMemory(OrderListSnapshot snapshot) {
+        logger.info("Receiving a new WorkingMemory snapshot produced at " + snapshot.getTimestamp());
+        synchronized (ksession) {
+            for (Order order : snapshot.getOrders()) {
+                logger.info("Syncing a new Order fact ...");
+                FactHandle orderFH = ksession.insert(order);
+                lastOrdersHandles.add(orderFH);
+            }
+        }
+    }
+
+    public void publishWorkingMemorySnapshot() {
+        logger.info("Publishing a new WorkingMemory snapshot...");
+        OrderListSnapshot snapshot = new OrderListSnapshot();
+        snapshot.setTimestamp(System.currentTimeMillis());
+        for (FactHandle handle : lastOrdersHandles) {
+            Object object = ksession.getObject(handle);
+            if (object instanceof Order) {
+                snapshot.addOrder((Order)object);
+            }
+        }
+        orderListSnapshotProducer.publish(snapshot);
+    }
+
     @POST
     public Response considerOrder(Order order) {
         logger.info("Get new order to process...");
@@ -84,6 +114,11 @@ public class QuotePriceUpdater {
             ksession.delete(lastOrdersHandles.remove());
         }
         
+        // Now that udpated the status from working memory (either from the
+        // rules or by cleaning the number of fact counts), we should build
+        // a snapshot and pubnlish it on Kafka.
+        publishWorkingMemorySnapshot();
+
         return Response.ok(order).build();
     }
 }
