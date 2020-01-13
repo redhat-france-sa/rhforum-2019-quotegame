@@ -1,4 +1,4 @@
-<nav class="navbar navbar-pf-vertical">
+<div id="app-nav-bar" class="navbar navbar-pf-vertical" [style.background-color]="headerColor">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle">
       <span class="sr-only">Toggle navigation</span>
@@ -11,18 +11,21 @@
       Red Hat Quote Game
     </a>
     <ul class="nav navbar-nav ml-5">
+      <li class="environment-info">
+        {{ environment }}
+      </li>
       <li class="dropdown">
-          <button class="btn btn-link dropdown-toggle nav-item-iconic" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <span title="Username" class="fa pficon-user"></span>
-            <span class="dropdown-title">
-                {{ user() }} <span class="caret"></span>
-            </span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <li><a href="#0">Preferences</a></li>
-            <li><a (click)="logout()">Logout</a></li>
-          </ul>
-        </li>
+        <button class="btn btn-link dropdown-toggle nav-item-iconic" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <span title="Username" class="fa pficon-user"></span>
+          <span class="dropdown-title">
+              {{ user() }} <span class="caret"></span>
+          </span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <li><a href="#0">Preferences</a></li>
+          <li><a (click)="logout()">Logout</a></li>
+        </ul>
+      </li>
     </ul>
   </div>
 
@@ -52,7 +55,7 @@
       </li>
     </ul>
   </nav>
-</nav>
+</div>
   
 <div class="nav-pf-vertical nav-pf-vertical-with-sub-menus">
   <ul class="list-group">
