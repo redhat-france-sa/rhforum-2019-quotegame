@@ -1,11 +1,29 @@
 [
-    {
-      "name" : "com.redhat.quotegame.util.OrderDeserializer",
-      "allDeclaredConstructors" : true,
-      "allPublicConstructors" : true,
-      "allDeclaredMethods" : true,
-      "allPublicMethods" : true,
-      "allDeclaredFields" : true,
-      "allPublicFields" : true
-    }
+  {
+    "name" : "com.redhat.quotegame.util.OrderDeserializer",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicFields" : true
+  },
+  {
+    "name" : "com.redhat.quotegame.priceupdater.model.OrderListSnapshotSerializer",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicFields" : true
+  },
+  {
+    "name" : "com.redhat.quotegame.priceupdater.model.OrderListSnapshotDeserializer",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicFields" : true
+  }
 ]
