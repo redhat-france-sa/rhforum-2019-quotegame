@@ -1,3 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quotegame-api-config
+data:
+  application.properties: |-
+    %kube.config.environment=EU
+    %kube.config.headerColor=#42b883
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -64,8 +73,15 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 5
           timeoutSeconds: 2
+        volumeMounts:                                               
+        - name: quarkus-api-volume                               
+          mountPath: /work/config
         securityContext:
           privileged: false
+      volumes:                                                      
+      - name: quarkus-api-volume                               
+        configMap:                                                
+          name: quotegame-api-config
 ---
 kind: Service
 apiVersion: v1

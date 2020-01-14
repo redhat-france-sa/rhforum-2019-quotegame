@@ -1,3 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quotegame-priceupdater-config
+data:
+  application.properties: |-
+    %kube.mp.messaging.incoming.workingmemory-snapshots-in.topic=quotegame-workingmemory-site2
+    %kube.kafka.workingmemory-snapshots-out.topic=quotegame-workingmemory-site1
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -7,7 +16,8 @@ metadata:
     app.kubernetes.io/instance: quotegame-priceupdater
     app.kubernetes.io/part-of: quotegame-app
     app.openshift.io/runtime: java
-spec:
+  annotations:
+    app.openshift.io/connects-to: 'infinispan,my-cluster-kafka'
   name: quotegame-priceupdater
 spec:
   replicas: 1
@@ -30,8 +40,15 @@ spec:
         - containerPort: 8080
           name: http
           protocol: TCP
+        volumeMounts:                                               
+        - name: quarkus-priceupdater-volume                               
+          mountPath: /work/config
         securityContext:
           privileged: false
+      volumes:                                                      
+      - name: quarkus-priceupdater-volume                               
+        configMap:                                                
+          name: quotegame-priceupdater-config
 ---
 kind: Service
 apiVersion: v1
