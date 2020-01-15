@@ -29,6 +29,11 @@
         </backup>
       </backups>
     </distributed-cache-configuration>
+
+    <!-- Quotegame caches -->
+    <distributed-cache name="quotegame-users" configuration="distributed"/>
+    <distributed-cache name="quotegame-portfolios" configuration="distributed"/>
+    <distributed-cache name="quotegame-quotes" configuration="distributed"/>
   </cache-container>
 
   <server xmlns="urn:infinispan:server:10.0">
