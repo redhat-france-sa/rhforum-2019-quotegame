@@ -34,7 +34,7 @@ EOF
     
 # Create a KafkaMirroMaker for quotegame-workingmemory from site1 to site2
 oc login $CLUSTER_2 -u $USER_2 -p $PASSWORD_2
-oc create secret generic my-cluster-site1-cluster-ca-cert --from-file=ca.crt=site2-ca.crt
+oc create secret generic my-cluster-site1-cluster-ca-cert --from-file=ca.crt=site1-ca.crt
 cat <<EOF | oc create -n quotegame -f -
 apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaMirrorMaker

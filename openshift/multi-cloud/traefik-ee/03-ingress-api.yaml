@@ -8,7 +8,7 @@ metadata:
     kubernetes.io/ingress.class: 'traefik'
 spec:
   rules:
-  - host: 'quotegame.redhat.containo.us'
+  - host: 'quotegame.redhat.containous.tech'
     http:
       paths:
       - backend:

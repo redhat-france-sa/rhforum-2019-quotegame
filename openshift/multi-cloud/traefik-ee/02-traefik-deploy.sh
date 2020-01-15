@@ -11,7 +11,7 @@ TRAEFIKEE_LB_1=`oc get service traefikee-lb -o=jsonpath='{.status.loadBalancer.i
 
 # Connect to cluster representing site1 and apply CLI command
 oc login $CLUSTER_1 -u $USER_1 -p $PASSWORD_1
-./traefikeectl connect --kubernetes
+./traefikeectl connect --kubernetes --clustername=traefikee-site1
 ./traefikeectl deploy --clustername=traefikee-site1 \
     --defaultentrypoints=http,https \
     --entryPoints='Name:http Address::80' \

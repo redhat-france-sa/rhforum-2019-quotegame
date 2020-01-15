@@ -118,6 +118,19 @@ Just execute this script that will take care of retrieving AWS LoadBalancer URLs
 
 ```
 $ ./02-traefik-deploy.sh
+Login successful.
+
+You have access to 54 projects, the list has been suppressed. You can list all projects with 'oc projects'
+
+Using project "traefikee".
+Login successful.
+
+You have access to 54 projects, the list has been suppressed. You can list all projects with 'oc projects'
+
+Using project "traefikee".
+Login successful.
+
+You have access to 54 projects, the list has been suppressed. You can list all projects with 'oc projects'
 
 Connecting to Kubernetes API...ok
 Retrieving TraefikEE Control credentials...ok
@@ -127,6 +140,10 @@ Removing cluster credentials from platform...ok
 Forwarding TraefikEE Control API port...ok
 Connecting to TraefikEE Control API...ok
 Deploying configuration...ok
+
+Login successful.
+
+You have access to 54 projects, the list has been suppressed. You can list all projects with 'oc projects'
 
 Connecting to Kubernetes API...ok
 Retrieving TraefikEE Control credentials...ok
@@ -142,7 +159,7 @@ Deploying configuration...ok
 
 TODO: Configuring a Containous platform account with AWS LoadBalancers host names reaching the `ping` ingress on both clusters.
 
-Finally, as TraefikEE deals with Kubernetes `Ingress` we should create such objects on both clusters. Contrary to already existing OpenShift Routes that are using the cluster default addressing scheme, ingresses will be created with the same globally-reachable URL. Here it will be `quotegame.redhat.containo.us` in our example.
+Finally, as TraefikEE deals with Kubernetes `Ingress` we should create such objects on both clusters. Contrary to already existing OpenShift Routes that are using the cluster default addressing scheme, ingresses will be created with the same globally-reachable URL. Here it will be `quotegame.redhat.containous.tech` in our example.
 
 On both clusters, run the following command and then check the ingress presence:
 
@@ -152,7 +169,7 @@ ingress.extensions/quotegame created
 
 $ oc get ingress -n quotegame
 $ NAME        HOSTS                          ADDRESS   PORTS     AGE
-quotegame   quotegame.redhat.containo.us             80        26m
+quotegame   quotegame.redhat.containous.tech             80        26m
 ```
 
 ### Viewing a Load-Balancer metrics
