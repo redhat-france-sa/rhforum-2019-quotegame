@@ -51,7 +51,10 @@ public class UserResource {
         User existingUser = cache.get(user.getName());
         if (existingUser == null) {
             cache.put(user.getName(), user);
-            portfoliosCache.put(user.getName(), new Portfolio(user.getName(), 1000D));
+            Portfolio existingPortfolio = portfoliosCache.get(user.getName());
+            if (existingPortfolio == null) {
+                portfoliosCache.put(user.getName(), new Portfolio(user.getName(), 1000D));
+            }
             return Response.ok(user).build();
         }
         return Response.status(400, "User with same name already registered").build();

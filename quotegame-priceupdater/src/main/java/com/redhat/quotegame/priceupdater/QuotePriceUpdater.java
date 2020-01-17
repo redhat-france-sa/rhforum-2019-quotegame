@@ -60,7 +60,6 @@ public class QuotePriceUpdater {
         logger.info("Receiving a new WM snapshot produced at " + snapshot.getTimestamp());
         synchronized (ksession) {
             // Remove alder facts and add new ones.
-            /*
             for (FactHandle handle : lastOrdersHandles) {
                 ksession.delete(handle);
             }
@@ -71,7 +70,6 @@ public class QuotePriceUpdater {
                 lastOrdersHandles.add(orderFH);
             }
             logger.info("Number of facts synced in WM = " + ksession.getFactCount());
-            */
         }
     }
 
