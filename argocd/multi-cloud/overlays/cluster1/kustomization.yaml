@@ -4,3 +4,4 @@ patchesStrategicMerge:
   - infinispan.yaml
 resources:
   - configmap-api.yaml
+  - infinispan-site1.yaml

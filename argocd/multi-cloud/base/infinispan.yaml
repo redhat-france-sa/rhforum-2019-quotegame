@@ -144,27 +144,6 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: infinispan-site1
-  labels:
-    clusterName: infinispan
-    infinispan_cr: infinispan
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
-spec:
-  ports:
-    - name: jgroups
-      protocol: TCP
-      port: 7900
-      targetPort: 7900
-  selector:
-    app: infinispan-pod
-    clusterName: infinispan
-    infinispan_cr: infinispan
-  type: LoadBalancer
----
-kind: Service
-apiVersion: v1
-metadata:
   name: infinispan-ping
   labels:
     clusterName: infinispan
