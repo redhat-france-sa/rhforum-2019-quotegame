@@ -75,8 +75,9 @@
       <artifactId>camel-quarkus-kafka</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.camel.quarkus</groupId>
-      <artifactId>camel-quarkus-netty-http</artifactId>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-http</artifactId>
+      <version>3.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>

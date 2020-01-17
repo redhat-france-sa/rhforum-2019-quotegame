@@ -57,13 +57,21 @@ public class QuotePriceUpdater {
 
     @Incoming("workingmemory-snapshots-in")
     public void syncWorkingMemory(OrderListSnapshot snapshot) {
-        logger.info("Receiving a new WorkingMemory snapshot produced at " + snapshot.getTimestamp());
+        logger.info("Receiving a new WM snapshot produced at " + snapshot.getTimestamp());
         synchronized (ksession) {
+            // Remove alder facts and add new ones.
+            /*
+            for (FactHandle handle : lastOrdersHandles) {
+                ksession.delete(handle);
+            }
+            lastOrdersHandles.clear();
             for (Order order : snapshot.getOrders()) {
-                logger.info("Syncing a new Order fact ...");
+                logger.info("Syncing a new Order fact: " + order.toString());
                 FactHandle orderFH = ksession.insert(order);
                 lastOrdersHandles.add(orderFH);
             }
+            logger.info("Number of facts synced in WM = " + ksession.getFactCount());
+            */
         }
     }
 
@@ -88,7 +96,7 @@ public class QuotePriceUpdater {
         Quote quote = quotesCache.get(order.getQuote());
         int quoteBefore = quote.hashCode();
 
-        logger.info("Inserting Order fact ...");
+        logger.info("Inserting Order fact: " + order);
         FactHandle orderFH = ksession.insert(order);
         lastOrdersHandles.add(orderFH);
 
@@ -119,6 +127,7 @@ public class QuotePriceUpdater {
         // a snapshot and pubnlish it on Kafka.
         publishWorkingMemorySnapshot();
 
+        logger.info("Returning response ok");
         return Response.ok(order).build();
     }
 }

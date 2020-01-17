@@ -18,7 +18,7 @@ oc login $CLUSTER_1 -u $USER_1 -p $PASSWORD_1
     --entryPoints='Name:https Address::443 TLS' \
     --logLevel=INFO \
     --kubernetes \
-    --fallbackurls="$TRAEFIKEE_LB_1"
+    --fallbackurls="http://$TRAEFIKEE_LB_1"
 
 # Connect to cluster representing site2 and apply deploy CLI command
 oc login $CLUSTER_2 -u $USER_2 -p $PASSWORD_2
@@ -29,4 +29,4 @@ oc login $CLUSTER_2 -u $USER_2 -p $PASSWORD_2
     --entryPoints='Name:https Address::443 TLS' \
     --logLevel=INFO \
     --kubernetes \
-    --fallbackurls="$TRAEFIKEE_LB_2"
+    --fallbackurls="http://$TRAEFIKEE_LB_2"

@@ -35,6 +35,9 @@
 		{
 			"name": "rhforum-2019",
 			"path": "."
+		},
+		{
+			"path": "/Users/lbroudou/Development/github/istio-demos"
 		}
 	],
 	"settings": {

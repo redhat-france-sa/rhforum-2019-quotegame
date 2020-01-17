@@ -5,6 +5,7 @@ metadata:
 data:
   application.properties: |-
     %kube.mp.messaging.incoming.workingmemory-snapshots-in.topic=quotegame-workingmemory-site1
+    %kube.mp.messaging.incoming.workingmemory-snapshots-in.bootstrap.servers=my-cluster-kafka-bootstrap:9092
     %kube.kafka.workingmemory-snapshots-out.topic=quotegame-workingmemory-site2
 ---
 apiVersion: extensions/v1beta1

@@ -17,7 +17,7 @@ metadata:
   name: quotegame-rebalancer-config
 data:
   application.properties: |-
-    %kube.priceUpdater.endpoints: netty-http:http://$PRICEUPDATER_1/api/order,netty-http:http://$PRICEUPDATER_2/api/order
+    %kube.priceUpdater.endpoints: http://$PRICEUPDATER_1/api/order,http://$PRICEUPDATER_2/api/order
 EOF
 
 # Create a config map for quotegame-rebalancer with the 2 endpoints
@@ -30,5 +30,5 @@ metadata:
   name: quotegame-rebalancer-config
 data:
   application.properties: |-
-    %kube.priceUpdater.endpoints: netty-http:http://$PRICEUPDATER_1/api/order,netty-http:http://$PRICEUPDATER_2/api/order
+    %kube.priceUpdater.endpoints: http://$PRICEUPDATER_1/api/order,http://$PRICEUPDATER_2/api/order
 EOF

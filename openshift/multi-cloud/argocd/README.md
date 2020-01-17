@@ -77,7 +77,7 @@ $ argocd --insecure --grpc-web --server ${ARGOCD_ROUTE}:443 account update-passw
 Password updated
 ```
 
-### 
+### Declaring clusters and applications
 
 ```
 export CLUSTER_1=<>
@@ -108,7 +108,7 @@ $ oc config set-context cluster2 --cluster=cluster2 --user=${USER_2}/cluster2 --
 Context "cluster2" modified.
 ```
 
-Adding cluster 1 and cluster2
+Adding cluster 1 
 ```
 $ argocd --insecure --grpc-web cluster add cluster1
 INFO[0000] ServiceAccount "argocd-manager" created in namespace "kube-system" 
@@ -117,6 +117,7 @@ INFO[0000] ClusterRoleBinding "argocd-manager-role-binding" already exists
 Cluster 'cluster1' added
 ```
 
+and cluster2...
 ```
 $ argocd --insecure --grpc-web cluster add cluster2
 INFO[0000] ServiceAccount "argocd-manager" created in namespace "kube-system" 
@@ -125,22 +126,28 @@ INFO[0000] ClusterRoleBinding "argocd-manager-role-binding" already exists
 Cluster 'cluster2' added
 ```
 
-
-# Adding a repository
+Adding a repository
 ```
 $ argocd repo add https://github.com/redhat-france-sa/rhforum-2019-quotegame.git
 repository 'https://github.com/redhat-france-sa/rhforum-2019-quotegame.git' added
 ```
 
+Adding a new project
+```
+$ argocd proj create quotegame --description 'Quotegame project'
+$ argocd proj add-source quotegame https://github.com/redhat-france-sa/rhforum-2019-quotegame.git
+$ argocd proj add-destination quotegame ${CLUSTER_1} quotegame-prod
+$ argocd proj add-destination quotegame ${CLUSTER_2} quotegame-prod
+```
 
-# Adding a project
-argocd proj create quotegame --description 'Quotegame project'
-argocd proj add-source quotegame https://github.com/redhat-france-sa/rhforum-2019-quotegame.git
-argocd proj add-destination quotegame ${CLUSTER_1} quotegame-prod
-argocd proj add-destination quotegame ${CLUSTER_2} quotegame-prod
-
-# Create the application on cluster1
+Create the application on cluster1
+```
 argocd app create --project quotegame --name cluster1-quotegame-prod --repo https://github.com/redhat-france-sa/rhforum-2019-quotegame.git --path argocd/multi-cloud/overlays/cluster1 --dest-server ${CLUSTER_1} --dest-namespace quotegame-prod --revision multi-cloud
+```
 
 # Create the application on cluster2
+```
 argocd app create --project quotegame --name cluster2-quotegame-prod --repo https://github.com/redhat-france-sa/rhforum-2019-quotegame.git --path argocd/multi-cloud/overlays/cluster2 --dest-server ${CLUSTER_2} --dest-namespace quotegame-prod --revision multi-cloud
+```
+
+### Organize resources
