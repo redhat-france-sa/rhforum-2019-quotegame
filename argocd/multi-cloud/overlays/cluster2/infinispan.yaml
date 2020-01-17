@@ -1,0 +1,17 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: infinispan
+spec:
+  template:
+    spec:
+      containers:
+        - name: infinispan
+          env:
+            - name: SITE
+              value: SITE2
+            - name: EXTERNAL_ADDR
+              value: a5b510b4b361a11ea8b900ac0ebc357a-815604614.us-east-1.elb.amazonaws.com
+            - name: INITIAL_HOSTS
+              value: a393f6926361a11eaa3ea02f8f20088a-1762302669.eu-central-1.elb.amazonaws.com[7900],a5b510b4b361a11ea8b900ac0ebc357a-815604614.us-east-1.elb.amazonaws.com[7900]
+            

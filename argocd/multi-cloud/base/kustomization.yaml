@@ -1,0 +1,4 @@
+resources:
+  - kafka.yaml
+  - infinispan.yaml
+  - deployment-api.yaml

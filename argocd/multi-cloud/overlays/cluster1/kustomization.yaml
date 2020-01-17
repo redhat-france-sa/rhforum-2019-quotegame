@@ -1,0 +1,6 @@
+bases:
+  - ../../base
+patchesStrategicMerge:
+  - infinispan.yaml
+resources:
+  - configmap-api.yaml

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quotegame-api-config
+data:
+  application.properties: |-
+    %kube.config.environment=US
+    %kube.config.headerColor=#ff7e67
