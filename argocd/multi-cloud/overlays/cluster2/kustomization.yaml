@@ -5,3 +5,6 @@ patchesStrategicMerge:
 resources:
   - configmap-api.yaml
   - infinispan-site2.yaml
+  - configmap-rebalancer.yaml
+  - configmap-priceupdater.yaml
+  - mirror-maker.yaml

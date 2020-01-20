@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quotegame-rebalancer-config
+data:
+  application.properties: |-
+    %kube.priceUpdater.endpoints: http://quotegame-rebalancer-quotegame-prod.apps.cluster-paris-fb92.paris-fb92.example.opentlc.com//api/order,http://quotegame-rebalancer-quotegame-prod.apps.cluster-paris-c03a.paris-c03a.example.opentlc.com/api/order

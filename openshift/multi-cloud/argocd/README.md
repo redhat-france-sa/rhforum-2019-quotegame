@@ -142,12 +142,12 @@ $ argocd proj add-destination quotegame ${CLUSTER_2} quotegame-prod
 
 Create the application on cluster1
 ```
-argocd app create --project quotegame --name cluster1-quotegame-prod --repo https://github.com/redhat-france-sa/rhforum-2019-quotegame.git --path argocd/multi-cloud/overlays/cluster1 --dest-server ${CLUSTER_1} --dest-namespace quotegame-prod --revision multi-cloud
+$ argocd app create --project quotegame --name cluster1-quotegame-prod --repo https://github.com/redhat-france-sa/rhforum-2019-quotegame.git --path argocd/multi-cloud/overlays/cluster1 --dest-server ${CLUSTER_1} --dest-namespace quotegame-prod --revision multi-cloud
 ```
 
 # Create the application on cluster2
 ```
-argocd app create --project quotegame --name cluster2-quotegame-prod --repo https://github.com/redhat-france-sa/rhforum-2019-quotegame.git --path argocd/multi-cloud/overlays/cluster2 --dest-server ${CLUSTER_2} --dest-namespace quotegame-prod --revision multi-cloud
+$ argocd app create --project quotegame --name cluster2-quotegame-prod --repo https://github.com/redhat-france-sa/rhforum-2019-quotegame.git --path argocd/multi-cloud/overlays/cluster2 --dest-server ${CLUSTER_2} --dest-namespace quotegame-prod --revision multi-cloud
 ```
 
 ### Organize resources

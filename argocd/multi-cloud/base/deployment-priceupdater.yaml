@@ -1,0 +1,82 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: quotegame-priceupdater
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/instance: quotegame-priceupdater
+    app.kubernetes.io/part-of: quotegame-app
+    app.openshift.io/runtime: java
+  annotations:
+    app.openshift.io/connects-to: 'infinispan,my-cluster-kafka'
+  name: quotegame-priceupdater
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quotegame-priceupdater
+  template:
+    metadata:
+      labels:
+        app: quotegame-priceupdater
+    spec:
+      containers:
+      - name: quotegame-priceupdater
+        image: quay.io/demoforum/quotegame-priceupdater:multi-cloud
+        imagePullPolicy: Always
+        env:
+        - name: QUARKUS_PROFILE
+          value: kube
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        volumeMounts:                                               
+        - name: quarkus-priceupdater-volume                               
+          mountPath: /work/config
+        securityContext:
+          privileged: false
+      volumes:                                                      
+      - name: quarkus-priceupdater-volume                               
+        configMap:                                                
+          name: quotegame-priceupdater-config
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: quotegame-priceupdater
+  labels:
+    app: quotegame-priceupdater
+    app.kubernetes.io/component: quotegame-priceupdater
+    app.kubernetes.io/instance: quotegame-priceupdater
+    app.kubernetes.io/part-of: quotegame-app
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: quotegame-priceupdater
+  type: ClusterIP
+  sessionAffinity: None
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: quotegame-priceupdater
+  labels:
+    app: quotegame-priceupdater
+    app.kubernetes.io/component: quotegame-priceupdater
+    app.kubernetes.io/instance: quotegame-priceupdater
+    app.kubernetes.io/part-of: quotegame-app
+  annotations:
+    openshift.io/host.generated: 'true'
+spec:
+  to:
+    kind: Service
+    name: quotegame-priceupdater
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  wildcardPolicy: None

@@ -2,3 +2,6 @@ resources:
   - kafka.yaml
   - infinispan.yaml
   - deployment-api.yaml
+  - deployment-processors.yaml
+  - deployment-rebalancer.yaml
+  - deployment-priceupdater.yaml

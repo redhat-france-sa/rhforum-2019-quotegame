@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quotegame-priceupdater-config
+data:
+  application.properties: |-
+    %kube.mp.messaging.incoming.workingmemory-snapshots-in.topic=quotegame-workingmemory-site2
+    %kube.mp.messaging.incoming.workingmemory-snapshots-in.bootstrap.servers=my-cluster-kafka-bootstrap:9092
+    %kube.kafka.workingmemory-snapshots-out.topic=quotegame-workingmemory-site1

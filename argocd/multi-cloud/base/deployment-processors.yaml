@@ -1,0 +1,75 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: quotegame-processors
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/instance: quotegame-processors
+    app.kubernetes.io/part-of: quotegame-app
+    app.openshift.io/runtime: java
+  annotations:
+    app.openshift.io/connects-to: 'infinispan,my-cluster-kafka'
+  name: quotegame-processors
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quotegame-processors
+  template:
+    metadata:
+      labels:
+        app: quotegame-processors
+    spec:
+      containers:
+      - name: quotegame-processors
+        image: quay.io/demoforum/quotegame-processors:multi-cloud
+        imagePullPolicy: Always
+        env:
+        - name: QUARKUS_PROFILE
+          value: kube
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        securityContext:
+          privileged: false
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: quotegame-processors
+  labels:
+    app: quotegame-processors
+    app.kubernetes.io/component: quotegame-processors
+    app.kubernetes.io/instance: quotegame-processors
+    app.kubernetes.io/part-of: quotegame-app
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: quotegame-processors
+  type: ClusterIP
+  sessionAffinity: None
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: quotegame-processors
+  labels:
+    app: quotegame-processors
+    app.kubernetes.io/component: quotegame-processors
+    app.kubernetes.io/instance: quotegame-processors
+    app.kubernetes.io/part-of: quotegame-app
+  annotations:
+    openshift.io/host.generated: 'true'
+spec:
+  to:
+    kind: Service
+    name: quotegame-processors
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  wildcardPolicy: None
