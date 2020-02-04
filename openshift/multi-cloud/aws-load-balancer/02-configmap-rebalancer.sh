@@ -1,11 +1,11 @@
 
 # Connect cluster 1 and retrieve route hostname for the quotegame-priceupdater component
 oc login $CLUSTER_1 -u $USER_1 -p $PASSWORD_1
-PRICEUPDATER_1=`oc get route quotegame-priceupdater -o=jsonpath='{.spec.host}'`
+PRICEUPDATER_1=`oc get route quotegame-priceupdater -o=jsonpath='{.spec.host}' -n quotegame`
 
 # Connect cluster 1 and retrieve route hostname for the quotegame-priceupdater component
 oc login $CLUSTER_2 -u $USER_2 -p $PASSWORD_2
-PRICEUPDATER_2=`oc get route quotegame-priceupdater -o=jsonpath='{.spec.host}'`
+PRICEUPDATER_2=`oc get route quotegame-priceupdater -o=jsonpath='{.spec.host}' -n quotegame`
 
 # Create a config map for quotegame-rebalancer with the 2 endpoints
 oc login $CLUSTER_1 -u $USER_1 -p $PASSWORD_1

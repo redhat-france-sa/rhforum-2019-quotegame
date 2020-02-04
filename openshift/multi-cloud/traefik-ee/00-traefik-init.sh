@@ -13,7 +13,7 @@ oc apply -f https://github.com/containous/traefikee-operator/raw/$TRAEFIKEE_VERS
 
 # Apply OpenShift specific part (only on master branch for now)
 oc apply -f https://github.com/containous/traefikee-operator/raw/master/deploy/traefikee-scc.yaml
-oc adm policy add-scc-to-user anyuid -z default -n traefikee
+oc adm policy add-scc-to-user traefikee-scc -z default -n traefikee
 
 # Download, adapt and install operator
 curl -fL https://github.com/containous/traefikee-operator/raw/$TRAEFIKEE_VERSION/deploy/operator.yaml -o operator.yaml
@@ -32,7 +32,7 @@ oc apply -f https://github.com/containous/traefikee-operator/raw/$TRAEFIKEE_VERS
 
 # Apply OpenShift specific part (only on master branch for now)
 oc apply -f https://github.com/containous/traefikee-operator/raw/master/deploy/traefikee-scc.yaml
-oc adm policy add-scc-to-user anyuid -z default -n traefikee
+oc adm policy add-scc-to-user traefikee-scc -z default -n traefikee
 
 # Install operator
 oc apply -f operator.yaml -n traefikee

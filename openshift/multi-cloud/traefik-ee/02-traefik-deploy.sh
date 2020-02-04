@@ -7,7 +7,7 @@ TRAEFIKEE_LB_1=`oc get service traefikee-lb -o=jsonpath='{.status.loadBalancer.i
 
 # Connect cluster 2 and retrieve LoadBalancer hostname for the infinispan-site2 service
 oc login $CLUSTER_2 -u $USER_2 -p $PASSWORD_2
-TRAEFIKEE_LB_1=`oc get service traefikee-lb -o=jsonpath='{.status.loadBalancer.ingress[0].hostname}'  -n traefikee`
+TRAEFIKEE_LB_1=`oc get service traefikee-lb -o=jsonpath='{.status.loadBalancer.ingress[0].hostname}' -n traefikee`
 
 # Connect to cluster representing site1 and apply CLI command
 oc login $CLUSTER_1 -u $USER_1 -p $PASSWORD_1
