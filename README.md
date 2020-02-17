@@ -5,9 +5,9 @@ A stock quote game illustrating Red Hat middleware portfolio around Kafka, Quark
 
 ## What is it?
 
-| Description              | Screenshot               |
-:-------------------------:|:-------------------------:
-| The app is a Single Page Application that allows you to buy and sell actions. Once logged in, you have an initial portfolio of 1,000.00$ dollars. Your goal is to make it grow by buying and seeing at the right moment. To make things simpler, only 2 quotes are available - volumes or orders will make the quote price vary ;-) | ![application](./assets/application.png) |
+The app is a Single Page Application that allows you to buy and sell actions. Once logged in, you have an initial portfolio of 1,000.00$ dollars. Your goal is to make it grow by buying and seeing at the right moment. To make things simpler, only 2 quotes are available - volumes or orders will make the quote price vary ;-)
+
+![application](./assets/application.png) |
 
 ## Architecture
 
