@@ -10,14 +10,19 @@ From the user point of view, user will be edirected to one of this 2 clusters de
 :-------------------------:|:-------------------------:
 | ![multi-cloud-eu](../../assets/multi-cloud-eu.png) | ![multi-cloud-us](../../assets/multi-cloud-us.png) |
 
+> You can adapt the name of clusters and color of the navigation bar into the `quotegame-api-config` ConfigMap.
+
 ### Multi-cloud architecture
 
 Here's the architecture diagram of the implementation of the application in multi-cloud mode:
 ![multi-cloud-architecture](../../assets/multi-cloud-architecture.png)
 
+The original architecture design has to evolve in order to support multi-cloud deployment.
 Some informations on new components we have to introduce from original design:
-* `quotegame-priceupdater`: TODO ...
-* `quotegame-rebalancer`: TODO ...
+* `quotegame-priceupdater`: This component was extracted from `quotegame-processors` in simple mode deployment. We extracted here the processing of new quote prices depending of sell and buy orders. This was necessary as the other part of the component in charge of portfolios update supported multiple consumers whereas this part clearly need to consume all the order events, coming from all clusters in the same place and correct order. Thus we also introduce the following component...
+* `quotegame-rebalancer`: Is a routing component that receives order events on both clusters and takes care of rebalancing them to the currently active `master` among the different `quotegame-priceupdater` instances. This component uses EIP to do the rebalancing.
+
+As `quotegame-priceupdater` supports some kind of `master`/`slaves` behaviour, when roles are changing and a new `master` emerged from `slaves`, the current instance should not start from scratch and should have all the working memory from previous `master` at hand, warm and ready to start. For that, we'll use a snapshoting/restoring mechanism based on Kafka mirroring. At each and every modification of a `quotegame-priceupdater master` working memory, a snapshot will be produced, sent and ingested by `slaves` to ensure a warm local working memory.
 
 
 ### Multi-cloud deployment options
