@@ -38,6 +38,12 @@
 		},
 		{
 			"path": "/Users/lbroudou/Development/github/istio-demos"
+		},
+		{
+			"path": "/Users/lbroudou/Development/github/my-money-digest"
+		},
+		{
+			"path": "/Users/lbroudou/Development/github/contacts-impl"
 		}
 	],
 	"settings": {

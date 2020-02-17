@@ -22,7 +22,7 @@ $ oc create -f https://operatorhub.io/installstrimzi-kafka-operator.yaml -n quot
 
 ### Deploying infrastructure services
 
-From now, we'll use the Kubernetes manifest placed into the `/openshift`subfolder of the Git repository.
+From now, we'll use the Kubernetes manifest placed into the `/openshift` subfolder of the Git repository.
 
 Deploy a Kafka broker to the project:
 

@@ -1,11 +1,26 @@
-### Multi-cloud deployment options
+### Multi-cloud application view
+
+The purpose of this `multi-cloud` branch and manifests is to adapt the application for being deployed multiple time on multiple cloud-providers and clusters in an active-active way. We provide configurations to deploy the application on 2 clusters dispatched on `EU` and `US` regions.
+
+> The provided configuration can be extended to more than 2 clusters: the design of the application allow this flexibility.
+
+From the user point of view, user will be edirected to one of this 2 clusters depending on its locality and cluster's availability.
+
+| EU Cluster               |  US Cluster              |
+:-------------------------:|:-------------------------:
+| ![multi-cloud-eu](../../assets/multi-cloud-eu.png) | ![multi-cloud-us](../../assets/multi-cloud-us.png) |
+
+### Multi-cloud architecture
 
 Here's the architecture diagram of the implementation of the application in multi-cloud mode:
-![](../../assets/multi-cloud-architecture.png)
+![multi-cloud-architecture](../../assets/multi-cloud-architecture.png)
 
 Some informations on new components we have to introduce from original design:
 * `quotegame-priceupdater`: TODO ...
 * `quotegame-rebalancer`: TODO ...
+
+
+### Multi-cloud deployment options
 
 #### Simple Load-Balancer Service type
 
