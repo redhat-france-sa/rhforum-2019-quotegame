@@ -5,11 +5,15 @@ A stock quote game illustrating Red Hat middleware portfolio around Kafka, Quark
 
 ## What is it?
 
+| Description              | Screenshot               |
+:-------------------------:|:-------------------------:
+| The app is a Single Page Application that allows you to buy and sell actions. Once logged in, you have an initial portfolio of 1,000.00$ dollars. Your goal is to make it grow by buying and seeing at the right moment. To make things simpler, only 2 quotes are available - volumes or orders will make the quote price vary ;-) | ![application](./assets/application.png) |
+
 ## Architecture
 
 Here's the architecture components diagram of this repository.
 
-This stock quote game is using Infinispan and Kafla as data sources backend. Infinispan distributed data grid is used for storing mutable and highly volatile informations like the users informations, the users portfolio and the current prices of all the managed quote symbols. Kafka on the other hand is used to as an append-only logs to store immutable events like user's orders and quotes prices history. 
+This stock quote game is using Infinispan and Kafka as data sources backend. Infinispan distributed data grid is used for storing mutable and highly volatile informations like the users informations, the users portfolio and the current prices of all the managed quote symbols. Kafka on the other hand is used to as an append-only logs to store immutable events like user's orders and quotes prices history. 
 
 ![](./assets/architecture.png)
 
@@ -208,8 +212,12 @@ docker push $CONTAINER_REGISTRY/quotegame-chaosmonkey:target
 
 ### Run it on your laptop
 
-...
+See the development mode notes above ;-) 
 
-### Run if on OpenShift
+### Run it on single OpenShift cluster
 
 Be sure to have built the native container images first and then follow the instructions [here](./openshift/README.MD).
+
+### Run it on multi-cloud OpenShift clusters
+
+Look at the multi-cloud resources and notes available into the `multi-cloud` branches [here](https://github.com/redhat-france-sa/rhforum-2019-quotegame/blob/multi-cloud/openshift/multi-cloud/README.md).
