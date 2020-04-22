@@ -11,7 +11,7 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.jboss.logging.Logger;
 
-import io.quarkus.infinispan.client.runtime.Remote;
+import io.quarkus.infinispan.client.Remote;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 import org.kie.kogito.rules.KieRuntimeBuilder;

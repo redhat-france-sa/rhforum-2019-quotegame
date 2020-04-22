@@ -184,8 +184,8 @@ Before proceeding with docker builds, you have to install locally the different 
 
 Then, just follow the following script (that you may want to adapt for targetting your very own Quay.io repository)
 
-```
-export $CONTAINER_REGISTRY=quay.io/demoforum
+```sh
+export CONTAINER_REGISTRY=quay.io/demoforum
 
 cd quotegame-api
 mvn clean package -Pnative -Dnative-image.docker-build=true

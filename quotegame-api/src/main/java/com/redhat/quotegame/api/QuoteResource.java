@@ -21,7 +21,7 @@ import javax.ws.rs.sse.SseEventSink;
 
 import com.redhat.quotegame.model.Quote;
 
-import io.quarkus.infinispan.client.runtime.Remote;
+import io.quarkus.infinispan.client.Remote;
 import io.quarkus.scheduler.Scheduled;
 
 import org.infinispan.client.hotrod.RemoteCache;
