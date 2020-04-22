@@ -12,17 +12,54 @@ $ oc new-project quotegame-rhforum --display-name="RH Forum Quote game"
 $ oc adm policy add-scc-to-user anyuid -z default -n quotegame-rhforum 
 ```
 
-Now install the *AMQ Streams* operator (AMQ Streams is the Red Hat Kafka distribution) using the Operator Lifecycle Manager from the Admin console.
+Now install the *AMQ Streams* operator (AMQ Streams is the Red Hat Kafka distribution) using the Operator Lifecycle Manager from the CLI.
 
-As an alternative, you can choose to deploy the upstream community operator that is called Strimzi using the following command line:
-
+```sh
+oc apply -f - <<EOF
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: quotegame-rhforum
+  namespace: quotegame-rhforum
+spec:
+  targetNamespaces:
+  - quotegame-rhforum
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: amq-streams
+  namespace: quotegame-rhforum
+spec:
+  channel: stable
+  name: amq-streams
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+EOF
 ```
-$ oc create -f https://operatorhub.io/installstrimzi-kafka-operator.yaml -n quotegame-rhforum
+
+As an alternative, you can choose to deploy the upstream community operator that is called Strimzi.
+
+Now install the *Infinispan* operator using the Operator Lifecycle Manager from the CLI.
+
+```sh
+oc apply -f - <<EOF
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: infinispan
+  namespace: quotegame-rhforum
+spec:
+  channel: stable
+  name: infinispan
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+EOF
 ```
 
 ### Deploying infrastructure services
 
-From now, we'll use the Kubernetes manifest placed into the `/openshift`subfolder of the Git repository.
+From now, we'll use the Kubernetes manifest placed into the `/openshift` subfolder of the Git repository.
 
 Deploy a Kafka broker to the project:
 
@@ -47,8 +84,9 @@ my-cluster-zookeeper-2                          2/2       Running   2          4
 
 Deploy an Infinispan server to the project
 
-```
-$ oc create -f openshift/00-statefulset-infinispan.yaml -n quotegame-rhforum
+```sh
+oc create secret generic infinispan-configuration --from-file=infinispan/ -n quotegame-rhforum
+oc apply -f openshift/00-statefulset-infinispan.yaml -n quotegame-rhforum
 ```
 
 Wait for a few minutes and you should get the following:

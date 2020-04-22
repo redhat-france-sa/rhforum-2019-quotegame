@@ -1,28 +1,10 @@
-kind: Secret
-apiVersion: v1
-metadata:
-  name: infinispan-mgmt-generated-secret
-data:
-  password: VUFidUduY1xsQEpZc2J1LQ==
-  username: YWRtaW4=
-type: Opaque
----
-kind: Secret
-apiVersion: v1
-metadata:
-  name: infinispan-app-generated-secret
-data:
-  password: a3YvYU8sL3lUYkpUUUB0Sg==
-  username: ZGV2ZWxvcGVy
-type: Opaque
----
 kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   annotations:
-    description: Infinispan 10.0.0 Beta (Ephemeral)
+    description: Infinispan 10 (Ephemeral)
     iconClass: icon-infinispan
-    openshift.io/display-name: Infinispan 10.0.0 Beta (Ephemeral)
+    openshift.io/display-name: Infinispan 10 (Ephemeral)
     openshift.io/documentation-url: 'http://infinispan.org/documentation/'
   name: infinispan
   labels:
@@ -42,15 +24,24 @@ spec:
         clusterName: infinispan
         infinispan_cr: infinispan
     spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: infinispan-configuration
+            defaultMode: 420
       containers:
         - resources:
-            requests:
+            limits:
               cpu: 500m
               memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 512Mi
           readinessProbe:
-            exec:
-              command:
-                - /usr/local/bin/is_healthy.sh
+            httpGet:
+              path: rest/v2/cache-managers/default/health/status
+              port: 11222
+              scheme: HTTP
             initialDelaySeconds: 10
             timeoutSeconds: 80
             periodSeconds: 10
@@ -59,50 +50,23 @@ spec:
           terminationMessagePath: /dev/termination-log
           name: infinispan
           livenessProbe:
-            exec:
-              command:
-                - /usr/local/bin/is_running.sh
+            httpGet:
+              path: rest/v2/cache-managers/default/health/status
+              port: 11222
+              scheme: HTTP
             initialDelaySeconds: 10
             timeoutSeconds: 80
             periodSeconds: 60
             successThreshold: 1
             failureThreshold: 5
           env:
-            - name: MGMT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: infinispan-mgmt-generated-secret
-                  key: username
-            - name: MGMT_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: infinispan-mgmt-generated-secret
-                  key: password
-            - name: APP_USER
-              valueFrom:
-                secretKeyRef:
-                  name: infinispan-app-generated-secret
-                  key: username
-            - name: APP_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: infinispan-app-generated-secret
-                  key: password
-            - name: IMAGE
-            - name: JGROUPS_PING_PROTOCOL
-              value: openshift.DNS_PING
-            - name: OPENSHIFT_DNS_PING_SERVICE_NAME
-              value: infinispan-ping
-            - name: NUMBER_OF_INSTANCE
-              value: "\x01"
-            - name: JAVA_OPTS
+            - name: JAVA_OPTIONS
+              value: >-
+                -Xmx200M -Xms200M -XX:MaxRAM=420M
+                -Dsun.zip.disableMemoryMapping=true -XX:+UseSerialGC
+                -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 
+            - name: EXTRA_JAVA_OPTIONS
           ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
-            - name: management
-              containerPort: 9990
-              protocol: TCP
             - name: ping
               containerPort: 8888
               protocol: TCP
@@ -110,22 +74,38 @@ spec:
               containerPort: 11222
               protocol: TCP
           imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: config-volume
+              mountPath: /opt/infinispan/server/conf
+            - name: infinispan
+              mountPath: /opt/infinispan/server/data
           terminationMessagePolicy: File
-          image: 'jboss/infinispan-server:10.0.0.Beta3'
-          args:
-            - cloud.xml
-            - '-Djboss.default.jgroups.stack=dns-ping'
-            - >-
-              -Djgroups.dns_ping.dns_query=infinispan-ping.quotegame-rhforum.svc.cluster.local
+          image: 'infinispan/server:10.1.0.Final-1'
+          command: 
+          - /opt/infinispan/bin/server.sh
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
       securityContext: {}
       schedulerName: default-scheduler
+  volumeClaimTemplates:
+    - metadata:
+        name: infinispan
+        namespace: quote-game
+        creationTimestamp: null
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        volumeMode: Filesystem
+      status:
+        phase: Pending
   serviceName: ''
   podManagementPolicy: OrderedReady
   updateStrategy:
-    type: OnDelete
+    type: RollingUpdate
   revisionHistoryLimit: 10
 ---
 kind: Service
