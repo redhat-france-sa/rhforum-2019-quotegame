@@ -14,7 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import io.quarkus.infinispan.client.runtime.Remote;
+import io.quarkus.infinispan.client.Remote;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.jboss.logging.Logger;
 

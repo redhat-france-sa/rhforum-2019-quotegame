@@ -13,7 +13,7 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.jboss.logging.Logger;
 
-import io.quarkus.infinispan.client.runtime.Remote;
+import io.quarkus.infinispan.client.Remote;
 
 @ApplicationScoped
 /**
