@@ -188,22 +188,22 @@ Then, just follow the following script (that you may want to adapt for targettin
 export CONTAINER_REGISTRY=quay.io/demoforum
 
 cd quotegame-api
-mvn clean package -Pnative -Dnative-image.docker-build=true
+mvn clean package -Pnative -Dquarkus.native.container-build=true
 docker build -f src/main/docker/Dockerfile.native -t demoforum/quotegame-api .
 docker tag demoforum/quotegame-api:latest $CONTAINER_REGISTRY/quotegame-api:target
 docker push $CONTAINER_REGISTRY/quotegame-api:target
 
 cd ../quotegame-processors
-mvn clean package -Pnative -Dnative-image.docker-build=true
+mvn clean package -Pnative -Dquarkus.native.container-build=true
 docker build -f src/main/docker/Dockerfile.native -t demoforum/quotegame-processors .
 docker tag demoforum/quotegame-processors:latest $CONTAINER_REGISTRY/quotegame-processors:target
 docker push $CONTAINER_REGISTRY/quotegame-processors:target
 
 cd ../quotegame-chaosmonkey
-mvn clean package -Pnative -Dnative-image.docker-build=true
+mvn clean package -Pnative -Dquarkus.native.container-build=true
 docker build -f src/main/docker/Dockerfile.native -t demoforum/quotegame-chaosmonkey .
 docker tag demoforum/quotegame-chaosmonkey:latest $CONTAINER_REGISTRY/quotegame-chaosmonkey:target
-docker push $CONTAINER_REGISTRY/quotegame-chaosmonkey:target 
+docker push $CONTAINER_REGISTRY/quotegame-chaosmonkey:target
 ```
 
 > This may take usually up to 15 minutes for building and pushing the native image depending on your laptop and network conditions. Also, be sure to allocate enough cores and memory to your Docker daemon ;-)
