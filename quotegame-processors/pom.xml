@@ -14,8 +14,8 @@
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <quarkus.platform.version>1.3.1.Final</quarkus.platform.version>
     <surefire-plugin.version>2.22.1</surefire-plugin.version>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <kogito.version>0.9.1</kogito.version>
   </properties>
@@ -115,7 +115,7 @@
                 <configuration>
                   <enableHttpUrlHandler>true</enableHttpUrlHandler>
                   <additionalBuildArgs>
-                    <additionalBuildArg>-H:ReflectionConfigurationFiles=/project/reflection-config.json</additionalBuildArg>
+                    <additionalBuildArg>-H:ReflectionConfigurationFiles=reflection-config.json</additionalBuildArg>
                   </additionalBuildArgs>
                 </configuration>
               </execution>
